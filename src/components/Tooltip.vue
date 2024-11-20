@@ -2,7 +2,9 @@
   <div class="container">
     <slot name="main-content" />
     <div class="tooltip">
-      <slot name="tooltip-content"></slot>
+      <div class="tooltip-inner">
+        <slot name="tooltip-content"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -44,20 +46,26 @@
 .tooltip {
   position: absolute;
   z-index: 1;
-  top: calc(100% + 5px);
-  padding: 0.5em;
-  border-radius: 0.3em;
-  background-color: var(--tooltip-background-color);
-  color: var(--tooltip-color);
-  font-size: var(--tooltip-font-size);
-  width: max-content;
-  max-width: v-bind('maxWidth');
+  top: calc(100%);
   pointer-events: none;
   transition: 0.2s opacity ease-in-out 0.4s;
   opacity: 0;
+  background-color: transparent;
+  font-size: var(--tooltip-font-size);
 }
 
-.tooltip::after {
+.tooltip-inner {
+  position: relative;
+  padding: 0.5em;
+  margin: 0.5em auto;
+  border-radius: 0.3em;
+  background-color: var(--tooltip-background-color);
+  color: var(--tooltip-color);
+  width: max-content;
+  max-width: v-bind('maxWidth');
+}
+
+.tooltip-inner::after {
   position: absolute;
   z-index: 1;
   content: "";
