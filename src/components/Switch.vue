@@ -6,6 +6,16 @@
 </template>
 
 <script setup>
+  /**
+   * Toggle switch
+   * @displayName Toggle switch
+   *
+   * Toggle switch component expects the following CSS variables to be set
+   * on parent element:
+   *   - `--switch-active-color`
+   *   - `--switch-inactive-color`
+   *   - `--switch-slider-color`
+   */
   const props = defineProps({
     size: {
       type: [String, Number],
