@@ -1,66 +1,61 @@
 <template>
-  <svg class="indicator" width="150" viewBox="0 0 20 20"
+  <svg class="indicator" viewBox="0 0 20 20"
       version="1.1" xmlns="http://www.w3.org/2000/svg">
     <circle class="background" cx="10" cy="10" r="8"></circle>
     <circle class="progress" cx="10" cy="10" r="8"></circle>
     <text class="text" v-if='label' x="50%" y="46%">{{ label }}</text>
-    <text class="text" x="50%" :y="percentageY">{{ percentage }}%</text>
+    <text class="text" x="50%" :y="percentageY">
+      {{ percentage }}{{ isNaN(percentage) ? '' : '%'}}
+    </text>
   </svg>
 </template>
 
-<script>
+<script setup>
   /**
    * Circular indicator
    * @displayName Circular indicator
+   *
+   * Circular indicator is somehow similar to the car speed indicator.
+   * Indicator takes percent value and converts it to the position of the
+   * colored bar.
+   *
+   * Indicator component requires the following CSS variables to be set on
+   * the parent container:
+   *   - `--circular-indicator-bg-color` - background color
+   *   - `--circular-indicator-color`    - bar color
    */
-  export default {
-    name: 'CircularIndicator',
-    props: {
-      /**
-       * The percentage value of the indicator, must be in the range [0, 100].
-       */
-      percentage: Number,
-      /**
-       * Optional indicator label. Displayed under the percentage if given.
-       */
-      label: {
-        type: String,
-        default: null
-      },
-      /**
-       * The default color of a bar.
-       */
-      color: {
-        type: String,
-        default: '#2ecc71'
-      },
-      /**
-       * The default inactive color.
-       */
-      backgroundColor: {
-        type: String,
-        default: '#00000011'
-      },
+  import { computed } from 'vue';
+
+  const props = defineProps({
+    /**
+     * Percentage value. Should be in the range [0, 100], otherwise it will be
+     * constrained.
+     */
+    percentage: Number,
+
+    /**
+     * Optional indicator label placed under the percent value.
+     */
+    label: {
+      type: String,
+      default: null
     },
-    computed: {
-      constrainedPercentage() {
-        const inMin = 0, inMax = 100, outMin = -51, outMax = -90;
-        console.log(`percentage=${this.percentage}`)
-        if (typeof this.percentage !== 'number' || isNaN(this.percentage))
-          return inMax;
-        return Math.min(Math.max(this.percentage, inMin), inMax);
-      },
-      value() {
-        const inMin = 0, inMax = 100, outMin = -51, outMax = -90;
-        return ((outMax - outMin) / (inMax - inMin) *
-          (this.constrainedPercentage - inMin) + outMin);
-      },
-    },
-    setup(props) {
-      const percentageY = props.label ? '63%' : '55%';
-      return { percentageY };
-    }
-  }
+  });
+
+  const inMin = 0, inMax = 100, outMin = -51, outMax = -90;
+
+  const constrainedPercentage = computed(() => {
+    if (typeof props.percentage !== 'number' || isNaN(props.percentage))
+      return inMax;
+    return Math.min(Math.max(props.percentage, inMin), inMax);
+  });
+
+  const value = computed(() => {
+    return ((outMax - outMin) / (inMax - inMin) *
+            (constrainedPercentage.value - inMin) + outMin);
+  });
+
+  const percentageY = props.label ? '63%' : '55%';
 </script>
 
 <style scoped>
@@ -70,7 +65,7 @@
 
 .background {
   fill: none;
-  stroke: v-bind('backgroundColor');
+  stroke: var(--circular-indicator-bg-color);
   stroke-width: 2;
   stroke-dasharray: 51 51;
   stroke-dashoffset: -90;
@@ -81,7 +76,7 @@
 
 .progress {
   fill: none;
-  stroke: v-bind('color');
+  stroke: var(--circular-indicator-color);
   stroke-width: 2;
   stroke-dasharray: 51 51;
   stroke-dashoffset: v-bind('value');

@@ -1,6 +1,6 @@
 <template>
 <div class="page">
-  <div class="card">
+  <div class="card circular-indicator-color-green">
     <CircularIndicator :percentage="parseInt(value)" :label='label'
       :thres-colors='{"70":"yellow","80":"red"}' />
     <input type="text" class="percentage-input" v-model="value" />
@@ -89,6 +89,11 @@
   width: 200px;
   border: 1px solid grey;
   border-radius: 5px;
+}
+
+.circular-indicator-color-green {
+  --circular-indicator-bg-color: #eee;
+  --circular-indicator-color: #2ecc71;
 }
 
 .switch-color-red {
