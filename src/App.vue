@@ -21,21 +21,38 @@
     </div>
   </div>
   <div class="card">
-    <div class="section checkbox-color-red">
-      <Checkbox v-model="checkboxValue" size="medium" :frozen="false" />
-      <p>{{ checkboxValue }}</p>
-    </div>
-    <div class="section checkbox-color-green">
-      <Checkbox v-model="frozeCheckbox" size="medium" :frozen="false" />
-      <Checkbox v-model="frozenCheckbox" size="medium"
-          :frozen="frozeCheckbox" />
-      <p>{{ frozenCheckbox }}</p>
-    </div>
-    <div class="section checkbox-color-blue">
-      <Checkbox v-model="masterCheckbox" size="medium" :frozen="false" />
-      <Checkbox v-model="masterCheckbox" size="medium"
-          :frozen="true" />
-    </div>
+    <Tooltip>
+      <template v-slot:main-content>
+        <div class="section checkbox-color-red">
+          <Checkbox v-model="checkboxValue" size="medium" :frozen="false" />
+          <p>{{ checkboxValue }}</p>
+        </div>
+      </template>
+      <template v-slot:tooltip-content>Simple checkbox</template>
+    </Tooltip>
+    <Tooltip>
+      <template v-slot:main-content>
+        <div class="section checkbox-color-green">
+          <Checkbox v-model="frozeCheckbox" size="medium" :frozen="false" />
+          <Checkbox v-model="frozenCheckbox" size="medium"
+              :frozen="frozeCheckbox" />
+          <p>{{ frozenCheckbox }}</p>
+        </div>
+      </template>
+      <template v-slot:tooltip-content>One checkbox freezes another</template>
+    </Tooltip>
+    <Tooltip max-width="150px">
+      <template v-slot:main-content>
+        <div class="section checkbox-color-blue">
+          <Checkbox v-model="masterCheckbox" size="medium" :frozen="false" />
+          <Checkbox v-model="masterCheckbox" size="medium"
+              :frozen="true" />
+        </div>
+      </template>
+      <template v-slot:tooltip-content>
+        Freezed checkbox mirrors non-freezed checkbox changes
+      </template>
+    </Tooltip>
   </div>
 </div>
 </template>
@@ -46,6 +63,7 @@
   import CircularIndicator from './components/CircularIndicator.vue';
   import Switch from './components/Switch.vue';
   import Checkbox from './components/Checkbox.vue';
+  import Tooltip from './components/Tooltip.vue';
 
   const label = 'CPU';
   const value = ref('100');
@@ -64,6 +82,10 @@
 
 <style scoped>
 .page {
+  --tooltip-background-color: #222;
+  --tooltip-color: #fff;
+  --tooltip-font-size: 14px;
+
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
