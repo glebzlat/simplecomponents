@@ -102,7 +102,7 @@
 }
 
 .switch:hover .slider {
-  box-shadow: 0 0 calc(6px * v-bind('ratio')) var(--switch-active-color);
+  box-shadow: 0 0 1px calc(1px * v-bind('ratio')) var(--switch-active-color);
 }
 
 .switch:hover .slider.frozen {
