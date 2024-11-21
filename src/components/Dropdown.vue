@@ -143,7 +143,7 @@
   background-color: var(--dropdown-content-bg-color,
     var(--dropdown-default-bg-color));
   list-style: none;
-  overflow-y: scroll;
+  overflow-y: auto;
   pointer-events: none;
   transition: 0.5s;
   opacity: 0;
