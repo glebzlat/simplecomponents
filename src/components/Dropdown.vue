@@ -20,6 +20,20 @@
 </template>
 
 <script setup>
+  /**
+   * Dropdown
+   * @displayName Dropdown
+   *
+   * Auto resizable dropdown list component. It uses the following CSS
+   * variables:
+   *   - `--dropdown-font-size`
+   *   - `--dropdown-color`
+   *   - `--dropdown-bg-color`
+   *   - `--dropdown-hover-bg-color`
+   *   - `--dropdown-content-bg-color`
+   *   - `--dropdown-item-hover-bg-color`
+   *   - `--dropdown-max-height`
+   */
   const props = defineProps({
     modelValue: {
       required: true
@@ -68,8 +82,12 @@
 
 <style scoped>
 .dropdown-container {
+  --dropdown-default-bg-color: #e1e1e1;
+  --dropdown-default-fg-color: #000;
+
   position: relative;
-  font-size: var(--dropdown-font-size);
+  font-size: var(--dropdown-font-size, 16px);
+  color: var(--dropdown-color, #000);
 }
 
 .dropdown-button {
@@ -79,13 +97,16 @@
   gap: 0 0.8em;
   width: 100%;
   padding: 0.7em;
-  background-color: var(--dropdown-bg-color);
+  background-color: var(--dropdown-bg-color, var(--dropdown-default-bg-color));
   border-radius: 0.3em;
   transition: background-color 0.2s ease-in-out;
 }
 
 .dropdown-button:hover {
-  background-color: var(--dropdown-hover-bg-color);
+  --dropdown-button-bg-color: var(--dropdown-bg-color,
+    var(--dropdown-default-bg-color));
+  background-color: var(--dropdown-hover-bg-color,
+    var(--dropdown-button-bg-color));
 }
 
 .dropdown-text {
@@ -95,7 +116,7 @@
 .dropdown-arrow {
   width: 0.4em;
   aspect-ratio: 1 / 1;
-  border-color: var(--dropdown-color);
+  border-color: var(--dropdown-color, var(--dropdown-default-fg-color));
   border-style: solid;
   border-width: 0.15em 0 0 0.15em;
   transform-origin: 0.15em 0.15em;
@@ -112,10 +133,13 @@
   z-index: 1;
   top: calc(100% + 0.5em);
   width: calc(v-bind('width') * 1px);
+  max-height: var(--dropdown-max-height, auto);
   padding: 0.3em;
   border-radius: 0.3em;
-  background-color: var(--dropdown-content-bg-color);
+  background-color: var(--dropdown-content-bg-color,
+    var(--dropdown-default-bg-color));
   list-style: none;
+  overflow-y: scroll;
   pointer-events: none;
   transition: 0.5s;
   opacity: 0;
@@ -135,7 +159,8 @@
 }
 
 .item-button:hover {
-  background-color: var(--dropdown-item-hover-bg-color);
+  background-color: var(--dropdown-item-hover-bg-color,
+    var(--dropdown-content-bg-color));
 }
 
 .content.active {
