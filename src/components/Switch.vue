@@ -10,8 +10,7 @@
    * Toggle switch
    * @displayName Toggle switch
    *
-   * Toggle switch component expects the following CSS variables to be set
-   * on parent element:
+   * Switch component uses the following CSS variables:
    *   - `--switch-active-color`
    *   - `--switch-inactive-color`
    *   - `--switch-slider-color`
@@ -63,6 +62,10 @@
 
 <style scoped>
 .switch {
+  --switch-default-inactive-color: #e1e1e1;
+  --switch-default-active-color: #63e060;
+  --switch-default-slider-color: #fff;
+
   position: relative;
   width: calc(46px * v-bind('ratio'));
   height: calc(24px * v-bind('ratio'));
@@ -76,7 +79,8 @@
   bottom: 0;
   left: 0;
   transition: 0.4s;
-  background-color: var(--switch-inactive-color);
+  background-color: var(--switch-inactive-color,
+    var(--switch-default-inactive-color));
   border-radius: calc(24px * v-bind('ratio'));
 }
 
@@ -86,7 +90,8 @@
 }
 
 .slider.checked {
-  background-color: var(--switch-active-color);
+  background-color: var(--switch-active-color,
+    var(--switch-default-active-color));
 }
 
 .slider::before {
@@ -96,13 +101,15 @@
   aspect-ratio: 1 / 1;
   left: calc(4px * v-bind('ratio'));
   bottom: calc(4px * v-bind('ratio'));
-  background-color: var(--switch-slider-color);
+  background-color: var(--switch-slider-color,
+    var(--switch-default-slider-color));
   transition: 0.4s;
   border-radius: 50%;
 }
 
 .switch:hover .slider {
-  box-shadow: 0 0 1px calc(1px * v-bind('ratio')) var(--switch-active-color);
+  box-shadow: 0 0 1px calc(1px * v-bind('ratio')) var(--switch-active-color,
+    var(--switch-default-active-color));
 }
 
 .switch:hover .slider.frozen {
