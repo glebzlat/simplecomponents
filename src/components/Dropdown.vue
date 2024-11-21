@@ -43,7 +43,7 @@
     }
   });
 
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUpdated } from 'vue';
 
   const active = ref(false);
 
@@ -67,16 +67,20 @@
   const width = ref(0);
 
   function onResize() {
-    width.value = dropdown.value.offsetWidth;
+    width.value = dropdown.value?.offsetWidth;
   }
 
   const resizeObserver = new ResizeObserver(onResize);
 
   onMounted(() => {
     width.value = dropdown.value.offsetWidth;
-    console.log(JSON.stringify(dropdown.value))
     resizeObserver.observe(dropdown.value)
-  })
+  });
+
+  onUpdated(() => {
+    if (active.value)
+      content.value.scrollTo(1, 0);
+  });
 
 </script>
 
