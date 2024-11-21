@@ -54,6 +54,10 @@
       </template>
     </Tooltip>
   </div>
+  <div class="card dropdown-settings">
+    <Dropdown class="dropdown" v-model="dropdownState"
+      :options="dropdownOptions" />
+  </div>
 </div>
 </template>
 
@@ -64,6 +68,7 @@
   import Switch from './components/Switch.vue';
   import Checkbox from './components/Checkbox.vue';
   import Tooltip from './components/Tooltip.vue';
+  import Dropdown from './components/Dropdown.vue';
 
   const label = 'CPU';
   const value = ref('100');
@@ -77,6 +82,13 @@
   const frozeCheckbox = ref(false);
   const frozenCheckbox = ref(false);
   const masterCheckbox = ref(false);
+
+  const dropdownOptions = [
+    'Item 1',
+    'Item 2 with very very very long name',
+    'Item 3'
+  ];
+  const dropdownState = ref(0);
 
 </script>
 
@@ -150,4 +162,18 @@
   --checkbox-active-color: #397dff;
   --checkbox-inactive-color: #ccc;
 }
+
+.dropdown-settings {
+  --dropdown-font-size: 16px;
+  --dropdown-color: black;
+  --dropdown-content-bg-color: #e1e1e1;
+  --dropdown-bg-color: #e1e1e1;
+  --dropdown-hover-bg-color: #2ecc71;
+  --dropdown-item-hover-bg-color: #2ecc71;
+}
+
+.dropdown {
+  width: 200px;
+}
+
 </style>
