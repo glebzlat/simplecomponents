@@ -90,7 +90,7 @@
   --dropdown-default-fg-color: #000;
 
   position: relative;
-  font-size: var(--dropdown-font-size, 16px);
+  font-size: var(--dropdown-font-size, inherit);
   color: var(--dropdown-color, #000);
 }
 

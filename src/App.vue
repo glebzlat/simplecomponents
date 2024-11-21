@@ -164,7 +164,6 @@
 }
 
 .dropdown-settings {
-  --dropdown-font-size: 16px;
   --dropdown-color: black;
   --dropdown-content-bg-color: #e1e1e1;
   --dropdown-bg-color: #e1e1e1;
