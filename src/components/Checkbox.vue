@@ -99,17 +99,17 @@
   position: absolute;
   content: "";
   opacity: 0;
-  transition: 0.05s;
+  transition: 0.1s;
   top: 0.1em;
   left: 0.3em;
   height: 0.7em;
   width: 0.4em;
+  border: solid #fff;
+  border-width: 0 0.15em 0.15em 0;
   transform: rotate(45deg);
 }
 
 .checkmark.checked::after {
-  border: solid #fff;
-  border-width: 0 0.15em 0.15em 0;
   opacity: 1;
 }
 </style>
