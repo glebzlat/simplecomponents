@@ -19,8 +19,7 @@
    * Indicator takes percent value and converts it to the position of the
    * colored bar.
    *
-   * Indicator component requires the following CSS variables to be set on
-   * the parent container:
+   * The following variables control the appearance of the component:
    *   - `--circular-indicator-bg-color` - background color
    *   - `--circular-indicator-color`    - bar color
    */
@@ -60,12 +59,16 @@
 
 <style scoped>
 .indicator {
+  --circular-indicator-default-bg-color: #e1e1e1;
+  --circular-indicator-default-color: #63e060;
+
   pointer-events: none;
 }
 
 .background {
   fill: none;
-  stroke: var(--circular-indicator-bg-color);
+  stroke: var(--circular-indicator-bg-color,
+    var(--circular-indicator-default-bg-color));
   stroke-width: 2;
   stroke-dasharray: 51 51;
   stroke-dashoffset: -90;
@@ -76,7 +79,8 @@
 
 .progress {
   fill: none;
-  stroke: var(--circular-indicator-color);
+  stroke: var(--circular-indicator-color,
+    var(--circular-indicator-default-color));
   stroke-width: 2;
   stroke-dasharray: 51 51;
   stroke-dashoffset: v-bind('value');
