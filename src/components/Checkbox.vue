@@ -63,6 +63,9 @@
 
 <style scoped>
 .checkbox-container {
+  --checkbox-default-active-color: #63e060;
+  --checkbox-default-inactive-color: #e1e1e1;
+
   position: relative;
   cursor: pointer;
 }
@@ -80,14 +83,16 @@
   position: relative;
   width: calc(20px * v-bind('ratio'));
   aspect-ratio: 1 / 1;
-  background-color: var(--checkbox-inactive-color);
+  background-color: var(--checkbox-inactive-color,
+    var(--checkbox-default-inactive-color));
   border-radius: calc(4px * v-bind('ratio'));
   transition: 0.1s;
   font-size: calc(20px * v-bind('ratio'));
 }
 
 .checkmark.checked {
-  background-color: var(--checkbox-active-color);
+  background-color: var(--checkbox-active-color,
+    var(--checkbox-default-active-color));
 }
 
 .checkmark.frozen {
