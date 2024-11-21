@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="tooltip-wrapper">
     <slot name="main-content" />
     <div class="tooltip">
       <div class="tooltip-inner">
@@ -17,7 +17,7 @@
    * Tooltip component shows a message under the content.
    *
    * Tooltip expects parent component to set the following CSS variables:
-   *   - `--tooltip-background-color`
+   *   - `--tooltip-bg-color`
    *   - `--tooltip-color`
    *   - `--tooltip-font-size`
    */
@@ -35,7 +35,11 @@
 </script>
 
 <style scoped>
-.container {
+.tooltip-wrapper {
+  --tooltip-default-bg-color: #222;
+  --tooltip-default-color: #fff;
+  --tooltip-default-font-size: inherit;
+
   all: inherit;
   padding: 0;
   margin: 0;
@@ -51,7 +55,7 @@
   transition: 0.2s opacity ease-in-out 0.4s;
   opacity: 0;
   background-color: transparent;
-  font-size: var(--tooltip-font-size);
+  font-size: var(--tooltip-font-size, var(--tooltip-default-font-size));
 }
 
 .tooltip-inner {
@@ -59,8 +63,9 @@
   padding: 0.5em;
   margin: 0.5em auto;
   border-radius: 0.3em;
-  background-color: var(--tooltip-background-color);
-  color: var(--tooltip-color);
+  background-color: var(--tooltip-bg-color,
+    var(--tooltip-default-bg-color));
+  color: var(--tooltip-color, var(--tooltip-default-color));
   width: max-content;
   max-width: v-bind('maxWidth');
 }
@@ -74,11 +79,11 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent var(--tooltip-background-color)
-    transparent;
+  border-color: transparent transparent var(--tooltip-bg-color,
+    var(--tooltip-default-bg-color)) transparent;
 }
 
-.container:hover .tooltip,
+.tooltip-wrapper:hover .tooltip,
 .tooltip:hover {
   opacity: 1;
   pointer-events: all;

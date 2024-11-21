@@ -24,7 +24,10 @@
     <Tooltip>
       <template v-slot:main-content>
         <div class="section checkbox-color-red">
-          <Checkbox v-model="checkboxValue" size="medium" :frozen="false" />
+          <Checkbox v-model="checkboxValue" size="medium" :frozen="false"
+              style="display: flex; align-items: center; gap: 0 0.5em;">
+            Text
+          </Checkbox>
           <p>{{ checkboxValue }}</p>
         </div>
       </template>
@@ -94,9 +97,7 @@
 
 <style scoped>
 .page {
-  --tooltip-background-color: #222;
-  --tooltip-color: #fff;
-  --tooltip-font-size: 14px;
+  --tooltip-font-size: 0.9em;
 
   display: flex;
   gap: 15px;
