@@ -7,7 +7,7 @@
       </p>
       <div class="dropdown-arrow"></div>
     </button>
-    <ul class="content" :class="{ active: active }">
+    <ul class="content" :class="{ active: active }" ref="content">
       <li class="item" v-for="(val, idx) in options" :key="idx">
         <button class="item-button" @click="choose(idx)">
           <p class="dropdown-text">
