@@ -61,6 +61,17 @@
     <Dropdown class="dropdown" v-model="dropdownState"
       :options="dropdownOptions" />
   </div>
+  <div class="card button-settings">
+    <div class="section">
+      <Button :loading="button1Loading" ref="button1" @click="button1Click"
+          shape="round">
+        My Button
+      </Button>
+      <Button :loading="button1Loading" shape="round" :frozen="true">
+        Frozen Button
+      </Button>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -72,6 +83,7 @@
   import Checkbox from './components/Checkbox.vue';
   import Tooltip from './components/Tooltip.vue';
   import Dropdown from './components/Dropdown.vue';
+  import Button from './components/Button.vue';
 
   const label = 'CPU';
   const value = ref('100');
@@ -92,6 +104,17 @@
     'Item 3'
   ];
   const dropdownState = ref(0);
+
+  const button1 = ref(null);
+  const button1Loading = ref(false);
+
+  function button1Click() {
+    button1Loading.value = true;
+    setTimeout(() => {
+      button1Loading.value = false;
+    }, 1000);
+  }
+
 
 </script>
 
@@ -118,10 +141,12 @@
 
 .section {
   display: flex;
+  gap: 3em;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  width: 200px;
+  min-width: 200px;
+  width: 100%;
   border: 1px solid grey;
   border-radius: 5px;
 }
@@ -174,6 +199,10 @@
 
 .dropdown {
   width: 200px;
+}
+
+.button-settings {
+  --button-hover-bg-color: #2ecc71;
 }
 
 </style>
