@@ -72,6 +72,9 @@
       </Button>
     </div>
   </div>
+  <div class="card">
+    <Menu :options="menuOptions" />
+  </div>
 </div>
 </template>
 
@@ -84,6 +87,7 @@
   import Tooltip from './components/Tooltip.vue';
   import Dropdown from './components/Dropdown.vue';
   import Button from './components/Button.vue';
+  import Menu from './components/Menu.vue';
 
   const label = 'CPU';
   const value = ref('100');
@@ -115,6 +119,22 @@
     }, 1000);
   }
 
+  const menuOptions = [
+    {
+      label: 'Item 1',
+      value: 'item1',
+      children: [
+        {
+          label: 'Sub Item 1',
+          value: 'item1sub1'
+        }
+      ]
+    },
+    {
+      label: 'Item 2',
+      value: 'item2'
+    }
+  ];
 
 </script>
 
