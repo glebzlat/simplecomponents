@@ -73,7 +73,8 @@
     </div>
   </div>
   <div class="card">
-    <Menu :options="menuOptions" />
+    <Menu :options="menuOptions" @update:value="setActiveMenuItem"
+        :active="activeMenuItem" />
   </div>
 </div>
 </template>
@@ -122,19 +123,38 @@
   const menuOptions = [
     {
       label: 'Item 1',
-      value: 'item1',
       children: [
         {
-          label: 'Sub Item 1',
-          value: 'item1sub1'
+          key: 'item1sub1',
+          label: 'Sub Item 1'
+        },
+        {
+          key: 'item1sub2',
+          label: 'Sub Item 2'
         }
       ]
     },
     {
       label: 'Item 2',
-      value: 'item2'
+      children: [
+        {
+          key: 'item2sub1',
+          label: 'Sub Item 1'
+        },
+      ]
+    },
+    {
+      key: 'item3',
+      label: 'Item 3'
     }
   ];
+
+  const activeMenuItem = ref(undefined);
+
+  function setActiveMenuItem(key) {
+    console.log(`active menu item: ${key}`);
+    activeMenuItem.value = key;
+  }
 
 </script>
 
