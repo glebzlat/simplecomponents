@@ -240,6 +240,7 @@
 
 .menu-arrow {
   margin-top: 0.1em;
+  margin-left: auto;
   height: 0.4em;
   aspect-ratio: 1 / 1;
   border-color: var(--menu-color, var(--menu-default-color));
