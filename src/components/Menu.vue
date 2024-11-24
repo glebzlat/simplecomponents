@@ -11,6 +11,9 @@
         <button
             class="menu-button menu-top-btn"
             @click="activateTop(top_idx)">
+          <div class="menu-icon" v-if="hasIcon">
+            <component :is="item.icon" v-if="item.icon" />
+          </div>
           <p>{{ item.label }}</p>
           <div class="menu-arrow" v-if="item.children"></div>
         </button>
@@ -27,6 +30,9 @@
             <button
                 class="menu-button menu-nested-btn"
                 @click="activateNested(idx)">
+              <div class="menu-icon" v-if="hasIcon">
+                <component :is="child.icon" v-if="child.icon" />
+              </div>
               <p>{{ child.label }}</p>
             </button>
           </li>
@@ -37,7 +43,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
 
   const props = defineProps({
     /**
@@ -47,7 +53,7 @@
      * option: {
      *   key?: String,
      *   label: String,
-     *   icon?: () => VNode,
+     *   icon?: VNode | () => VNode,
      *   children?: Array<option>
      * }
      * ```
@@ -131,6 +137,21 @@
     if (key !== props.active)
       emit('update:value', key);
   }
+
+  const hasIcon = computed(() => {
+    for (let i of props.options) {
+      if (i.icon) {
+        return true;
+      }
+      if (i.children) {
+        for (let j of i.children) {
+          if (j.icon) {
+            return true;
+          }
+        }
+      }
+    }
+  });
 </script>
 
 <style scoped>
@@ -170,8 +191,7 @@
 
 .menu-button {
   display: flex;
-  gap: 0 0.2em;
-  justify-content: space-between;
+  gap: 0 0.7em;
   align-items: center;
   width: 100%;
   padding: 1em;
@@ -181,8 +201,18 @@
   transition: 0.2s;
 }
 
+.menu-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+}
+
 .menu-arrow {
-  width: 0.4em;
+  margin-top: 0.1em;
+  height: 0.4em;
   aspect-ratio: 1 / 1;
   border-color: var(--menu-color, var(--menu-default-color));
   border-style: solid;

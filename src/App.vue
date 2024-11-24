@@ -73,6 +73,8 @@
     </div>
   </div>
   <div class="card">
+    <p v-if="!activeMenuItem">Choose an item</p>
+    <p v-else>Chosen: {{ activeMenuItem }}</p>
     <Menu :options="menuOptions" @update:value="setActiveMenuItem"
         :active="activeMenuItem" />
   </div>
@@ -80,7 +82,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { ref, h } from 'vue';
 
   import CircularIndicator from './components/CircularIndicator.vue';
   import Switch from './components/Switch.vue';
@@ -120,9 +122,23 @@
     }, 1000);
   }
 
+  const simpleIcon = h('svg',
+    {
+      xmlns: 'http://www.w3.org/2000/svg',
+      viewBox: '0 0 24 24',
+      width: '24',
+      height: '24',
+      fill: 'currentColor'
+    },
+    [
+      h('circle', { cx: '12', cy: '12', r: '10', fill: '#4CAF50' }), // Green circle
+      h('rect', { width: '12', height: '12', x: '6', y: '6', rx: '3', ry: '3',fill: '#fff' })
+  ]);
+
   const menuOptions = [
     {
       label: 'Item 1',
+      icon: simpleIcon,
       children: [
         {
           key: 'item1sub1',
@@ -136,6 +152,7 @@
     },
     {
       label: 'Item 2',
+      icon: simpleIcon,
       children: [
         {
           key: 'item2sub1',
