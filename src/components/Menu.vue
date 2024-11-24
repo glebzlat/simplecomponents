@@ -43,26 +43,54 @@
 </template>
 
 <script setup>
+  /**
+   * Menu component
+   * @displayName Menu
+   *
+   * Menu is a component for structuring nested options with one nesting level.
+   * It takes a list of options, where each option is an object:
+   *
+   * ```
+   * option: {
+   *   key?: String,
+   *   label: String,
+   *   icon?: VNode | () => VNode,
+   *   children?: Array<option>
+   * }
+   * ```
+   *
+   * `key` is a unique identifier of a particular option. When the user chooses
+   * an option, and option has no children, then an event with the
+   * corresponding key is emitted. If an option has `children` attribute, then,
+   * when the user chooses it, the corresponding nested list opens. `key` is
+   * required, if `children` is not set.
+   *
+   * `label` is a string that is displayed to the user.
+   *
+   * `icon` is an option icon. If at least one option has an icon, all options'
+   * content is aligned by the icon's fixed width.
+   *
+   * `children` is an array of options. Note that Menu supports only one level
+   * of nesting.
+   *
+   * The following CSS variables control the appearance of the Menu:
+   *   - `--menu-color`
+   *   - `--menu-active-color`
+   *   - `--menu-hover-color`
+   *   - `--menu-bg-color`
+   *   - `--menu-active-bg-color`
+   *   - `--menu-hover-bg-color`
+   *   - `--menu-nested-color`
+   *   - `--menu-nested-hover-color`
+   *   - `--menu-nested-active-color`
+   *   - `--menu-nested-list-bg-color`
+   *   - `--menu-nested-hover-bg-color`
+   *   - `--menu-nested-active-bg-color`
+   *   - `--menu-font-size`
+   */
   import { ref, computed } from 'vue';
 
   const props = defineProps({
-    /**
-     * Options is an array of objects, each of the following structure:
-     *
-     * ```
-     * option: {
-     *   key?: String,
-     *   label: String,
-     *   icon?: VNode | () => VNode,
-     *   children?: Array<option>
-     * }
-     * ```
-     *
-     * `key` property can be unset, if `children` is set. Options with
-     * `children` serve only as containers for sub-items. If `children` is set,
-     * then item will never be "activated" and so an event, containing its
-     * assigned key, will never be emitted.
-     */
     options: {
       type: Array,
       required: true
