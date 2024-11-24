@@ -71,6 +71,12 @@
         Frozen Button
       </Button>
     </div>
+    <div class="section">
+      <Button :loading="button2Loading" @click="button2Click">
+        <template #icon><component :is="simpleIcon" /></template>
+        With Icon
+      </Button>
+    </div>
   </div>
   <div class="card">
     <p v-if="!activeMenuItem">Choose an item</p>
@@ -114,12 +120,16 @@
 
   const button1 = ref(null);
   const button1Loading = ref(false);
+  const button2Loading = ref(false);
 
   function button1Click() {
     button1Loading.value = true;
-    setTimeout(() => {
-      button1Loading.value = false;
-    }, 1000);
+    setTimeout(() => button1Loading.value = false, 1000);
+  }
+
+  function button2Click() {
+    button2Loading.value = true;
+    setTimeout(() => button2Loading.value = false, 2000);
   }
 
   const simpleIcon = h('svg',
