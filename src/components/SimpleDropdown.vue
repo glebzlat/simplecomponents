@@ -1,15 +1,34 @@
 <template>
-  <div class="dropdown-container" v-click-outside="close" ref="dropdown"
-      @resize="onResize">
-    <button class="dropdown-button" @click="toggle" :class="{active: active}">
+  <div
+    ref="dropdown"
+    v-click-outside="close"
+    class="dropdown-container"
+    @resize="onResize"
+  >
+    <button
+      class="dropdown-button"
+      :class="{active: active}"
+      @click="toggle"
+    >
       <p class="dropdown-text">
         {{ options[modelValue] }}
       </p>
-      <div class="dropdown-arrow"></div>
+      <div class="dropdown-arrow" />
     </button>
-    <ul class="content" :class="{ active: active }" ref="content">
-      <li class="item" v-for="(val, idx) in options" :key="idx">
-        <button class="item-button" @click="choose(idx)">
+    <ul
+      ref="content"
+      class="content"
+      :class="{ active: active }"
+    >
+      <li
+        v-for="(val, idx) in options"
+        :key="idx"
+        class="item"
+      >
+        <button
+          class="item-button"
+          @click="choose(idx)"
+        >
           <p class="dropdown-text">
             {{ val }}
           </p>
@@ -34,12 +53,14 @@
    *   - `--dropdown-item-hover-bg-color`
    *   - `--dropdown-max-height`
    */
-  const props = defineProps({
+  defineProps({
     modelValue: {
+      type: Number,
       required: true
     },
     options: {
-      type: Array
+      type: Array,
+      required: true
     }
   });
 
@@ -74,7 +95,7 @@
 
   onMounted(() => {
     width.value = dropdown.value.offsetWidth;
-    resizeObserver.observe(dropdown.value)
+    resizeObserver.observe(dropdown.value);
   });
 
   onUpdated(() => {

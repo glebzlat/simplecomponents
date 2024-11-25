@@ -1,11 +1,34 @@
 <template>
-  <svg class="indicator" viewBox="0 0 20 20"
-      version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <circle class="background" cx="10" cy="10" r="8"></circle>
-    <circle class="progress" cx="10" cy="10" r="8"></circle>
-    <text class="text" v-if='label' x="50%" y="46%">{{ label }}</text>
-    <text class="text" x="50%" :y="percentageY">
-      {{ percentage }}{{ isNaN(percentage) ? '' : '%'}}
+  <svg
+    class="indicator"
+    viewBox="0 0 20 20"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      class="background"
+      cx="10"
+      cy="10"
+      r="8"
+    />
+    <circle
+      class="progress"
+      cx="10"
+      cy="10"
+      r="8"
+    />
+    <text
+      v-if="label"
+      class="text"
+      x="50%"
+      y="46%"
+    >{{ label }}</text>
+    <text
+      class="text"
+      x="50%"
+      :y="percentageY"
+    >
+      {{ percentage }}{{ isNaN(percentage) ? '' : '%' }}
     </text>
   </svg>
 </template>
@@ -30,7 +53,10 @@
      * Percentage value. Should be in the range [0, 100], otherwise it will be
      * constrained.
      */
-    percentage: Number,
+    percentage: {
+      type: Number,
+      required: true
+    },
 
     /**
      * Optional indicator label placed under the percent value.
@@ -38,7 +64,7 @@
     label: {
       type: String,
       default: null
-    },
+    }
   });
 
   const inMin = 0, inMax = 100, outMin = -51, outMax = -90;

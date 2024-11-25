@@ -1,7 +1,10 @@
 <template>
   <div class="switch">
-    <div class="slider" :class="{ checked: modelValue, frozen: frozen }"
-        @click="toggle"></div>
+    <div
+      class="slider"
+      :class="{ checked: modelValue, frozen: frozen }"
+      @click="toggle"
+    />
   </div>
 </template>
 
@@ -50,7 +53,7 @@
       ratio = 1.5;
       break;
     default:
-      console.warn(`unknown size value: ${props.size}`)
+      console.warn(`unknown size value: ${props.size}`);
       ratio = 1;
       break;
     }

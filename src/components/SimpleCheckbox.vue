@@ -1,8 +1,14 @@
 <template>
   <label class="checkbox-container">
-    <input type="checkbox" class="checkbox" @click="toggle">
-    <div class="checkmark" :class="{ checked: modelValue, frozen: frozen }">
-    </div>
+    <input
+      type="checkbox"
+      class="checkbox"
+      @click="toggle"
+    >
+    <div
+      class="checkmark"
+      :class="{ checked: modelValue, frozen: frozen }"
+    />
     <slot />
   </label>
 </template>
@@ -52,7 +58,7 @@
       ratio = 1.5;
       break;
     default:
-      console.warn(`unknown size value: ${props.size}`)
+      console.warn(`unknown size value: ${props.size}`);
       ratio = 1;
       break;
     }

@@ -1,102 +1,174 @@
 <template>
-<div class="page">
-  <div class="card circular-indicator-color-green">
-    <CircularIndicator :percentage="parseInt(value)" :label='label'
-      :thres-colors='{"70":"yellow","80":"red"}' />
-    <input type="text" class="percentage-input" v-model="value" />
-  </div>
-  <div class="card">
-    <div class="section switch-color-red">
-      <Switch v-model="switchValue" size="medium" :frozen="false" />
-      <p>{{ switchValue }}</p>
+  <div class="page">
+    <div class="card circular-indicator-color-green">
+      <SimpleCircularIndicator
+        :percentage="parseInt(value)"
+        :label="label"
+        :thres-colors="{&quot;70&quot;:&quot;yellow&quot;,&quot;80&quot;:&quot;red&quot;}"
+      />
+      <input
+        v-model="value"
+        type="text"
+        class="percentage-input"
+      >
     </div>
-    <div class="section switch-color-green">
-      <Switch v-model="frozeSwitch" size="medium" :frozen="false" />
-      <Switch v-model="frozenValue" size="medium" :frozen="frozeSwitch" />
-      <p>{{ frozenValue }}</p>
+    <div class="card">
+      <div class="section switch-color-red">
+        <SimpleSwitch
+          v-model="switchValue"
+          size="medium"
+          :frozen="false"
+        />
+        <p>{{ switchValue }}</p>
+      </div>
+      <div class="section switch-color-green">
+        <SimpleSwitch
+          v-model="frozeSwitch"
+          size="medium"
+          :frozen="false"
+        />
+        <SimpleSwitch
+          v-model="frozenValue"
+          size="medium"
+          :frozen="frozeSwitch"
+        />
+        <p>{{ frozenValue }}</p>
+      </div>
+      <div class="section switch-color-blue">
+        <SimpleSwitch
+          v-model="masterSwitch"
+          size="medium"
+          :frozen="false"
+        />
+        <SimpleSwitch
+          v-model="masterSwitch"
+          size="medium"
+          :frozen="true"
+        />
+      </div>
     </div>
-    <div class="section switch-color-blue">
-      <Switch v-model="masterSwitch" size="medium" :frozen="false" />
-      <Switch v-model="masterSwitch" size="medium" :frozen="true" />
+    <div class="card">
+      <SimpleTooltip>
+        <template #main-content>
+          <div class="section checkbox-color-red">
+            <SimpleCheckbox
+              v-model="checkboxValue"
+              size="medium"
+              :frozen="false"
+              style="display: flex; align-items: center; gap: 0 0.5em;"
+            >
+              Text
+            </SimpleCheckbox>
+            <p>{{ checkboxValue }}</p>
+          </div>
+        </template>
+        <template #tooltip-content>
+          Simple checkbox
+        </template>
+      </SimpleTooltip>
+      <SimpleTooltip>
+        <template #main-content>
+          <div class="section checkbox-color-green">
+            <SimpleCheckbox
+              v-model="frozeCheckbox"
+              size="medium"
+              :frozen="false"
+            />
+            <SimpleCheckbox
+              v-model="frozenCheckbox"
+              size="medium"
+              :frozen="frozeCheckbox"
+            />
+            <p>{{ frozenCheckbox }}</p>
+          </div>
+        </template>
+        <template #tooltip-content>
+          One checkbox freezes another
+        </template>
+      </SimpleTooltip>
+      <SimpleTooltip max-width="150px">
+        <template #main-content>
+          <div class="section checkbox-color-blue">
+            <SimpleCheckbox
+              v-model="masterCheckbox"
+              size="medium"
+              :frozen="false"
+            />
+            <SimpleCheckbox
+              v-model="masterCheckbox"
+              size="medium"
+              :frozen="true"
+            />
+          </div>
+        </template>
+        <template #tooltip-content>
+          Freezed checkbox mirrors non-freezed checkbox changes
+        </template>
+      </SimpleTooltip>
+    </div>
+    <div class="card dropdown-settings">
+      <SimpleDropdown
+        v-model="dropdownState"
+        class="dropdown"
+        :options="dropdownOptions"
+      />
+    </div>
+    <div class="card button-settings">
+      <div class="section">
+        <SimpleButton
+          ref="button1"
+          :loading="button1Loading"
+          shape="round"
+          @click="button1Click"
+        >
+          My SimpleButton
+        </SimpleButton>
+        <SimpleButton
+          :loading="button1Loading"
+          shape="round"
+          :frozen="true"
+        >
+          Frozen SimpleButton
+        </SimpleButton>
+      </div>
+      <div class="section">
+        <SimpleButton
+          :loading="button2Loading"
+          @click="button2Click"
+        >
+          <template #icon>
+            <component :is="simpleIcon" />
+          </template>
+          With Icon
+        </SimpleButton>
+      </div>
+    </div>
+    <div class="card">
+      <p v-if="!activeMenuItem">
+        Choose an item
+      </p>
+      <p v-else>
+        Chosen: {{ activeMenuItem }}
+      </p>
+      <SimpleMenu
+        :options="menuOptions"
+        :active="activeMenuItem"
+        @update:value="setActiveMenuItem"
+      />
     </div>
   </div>
-  <div class="card">
-    <Tooltip>
-      <template v-slot:main-content>
-        <div class="section checkbox-color-red">
-          <Checkbox v-model="checkboxValue" size="medium" :frozen="false"
-              style="display: flex; align-items: center; gap: 0 0.5em;">
-            Text
-          </Checkbox>
-          <p>{{ checkboxValue }}</p>
-        </div>
-      </template>
-      <template v-slot:tooltip-content>Simple checkbox</template>
-    </Tooltip>
-    <Tooltip>
-      <template v-slot:main-content>
-        <div class="section checkbox-color-green">
-          <Checkbox v-model="frozeCheckbox" size="medium" :frozen="false" />
-          <Checkbox v-model="frozenCheckbox" size="medium"
-              :frozen="frozeCheckbox" />
-          <p>{{ frozenCheckbox }}</p>
-        </div>
-      </template>
-      <template v-slot:tooltip-content>One checkbox freezes another</template>
-    </Tooltip>
-    <Tooltip max-width="150px">
-      <template v-slot:main-content>
-        <div class="section checkbox-color-blue">
-          <Checkbox v-model="masterCheckbox" size="medium" :frozen="false" />
-          <Checkbox v-model="masterCheckbox" size="medium"
-              :frozen="true" />
-        </div>
-      </template>
-      <template v-slot:tooltip-content>
-        Freezed checkbox mirrors non-freezed checkbox changes
-      </template>
-    </Tooltip>
-  </div>
-  <div class="card dropdown-settings">
-    <Dropdown class="dropdown" v-model="dropdownState"
-      :options="dropdownOptions" />
-  </div>
-  <div class="card button-settings">
-    <div class="section">
-      <Button :loading="button1Loading" ref="button1" @click="button1Click"
-          shape="round">
-        My Button
-      </Button>
-      <Button :loading="button1Loading" shape="round" :frozen="true">
-        Frozen Button
-      </Button>
-    </div>
-    <div class="section">
-      <Button :loading="button2Loading" @click="button2Click">
-        <template #icon><component :is="simpleIcon" /></template>
-        With Icon
-      </Button>
-    </div>
-  </div>
-  <div class="card">
-    <p v-if="!activeMenuItem">Choose an item</p>
-    <p v-else>Chosen: {{ activeMenuItem }}</p>
-    <Menu :options="menuOptions" @update:value="setActiveMenuItem"
-        :active="activeMenuItem" />
-  </div>
-</div>
 </template>
 
 <script setup>
   import { ref, h } from 'vue';
 
-  import CircularIndicator from './components/CircularIndicator.vue';
-  import Switch from './components/Switch.vue';
-  import Checkbox from './components/Checkbox.vue';
-  import Tooltip from './components/Tooltip.vue';
-  import Dropdown from './components/Dropdown.vue';
-  import Button from './components/Button.vue';
-  import Menu from './components/Menu.vue';
+  import SimpleCircularIndicator from './components/SimpleCircularIndicator.vue';
+  import SimpleSwitch from './components/SimpleSwitch.vue';
+  import SimpleCheckbox from './components/SimpleCheckbox.vue';
+  import SimpleTooltip from './components/SimpleTooltip.vue';
+  import SimpleDropdown from './components/SimpleDropdown.vue';
+  import SimpleButton from './components/SimpleButton.vue';
+  import SimpleMenu from './components/SimpleMenu.vue';
 
   const label = 'CPU';
   const value = ref('100');
@@ -167,7 +239,7 @@
         {
           key: 'item2sub1',
           label: 'Sub Item 1'
-        },
+        }
       ]
     },
     {

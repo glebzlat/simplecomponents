@@ -2,36 +2,55 @@
   <div class="menu">
     <ul class="menu-list">
       <li
-          class="menu-item"
-          v-for="item, top_idx in options"
-          :key="top_idx"
-          :class="{ active: active === item.key,
-                    opened: openedTopIdx === top_idx }"
-          >
+        v-for="item, top_idx in options"
+        :key="top_idx"
+        class="menu-item"
+        :class="{ active: active === item.key,
+                  opened: openedTopIdx === top_idx }"
+      >
         <button
-            class="menu-button menu-top-btn"
-            @click="activateTop(top_idx)">
-          <div class="menu-icon" v-if="hasIcon">
-            <component :is="item.icon" v-if="item.icon" />
+          class="menu-button menu-top-btn"
+          @click="activateTop(top_idx)"
+        >
+          <div
+            v-if="hasIcon"
+            class="menu-icon"
+          >
+            <component
+              :is="item.icon"
+              v-if="item.icon"
+            />
           </div>
           <p>{{ item.label }}</p>
-          <div class="menu-arrow" v-if="item.children"></div>
+          <div
+            v-if="item.children"
+            class="menu-arrow"
+          />
         </button>
         <ul
-            class="menu-nested-list"
-            :class="`menu-list-${top_idx}`"
-            v-if="item.children"
-            ref="nestedLists">
+          v-if="item.children"
+          ref="nestedLists"
+          class="menu-nested-list"
+          :class="`menu-list-${top_idx}`"
+        >
           <li
-              class="menu-item"
-              v-for="child, idx in item.children"
-              :class="{ active: active === child.key }"
-              :key="idx">
+            v-for="child, idx in item.children"
+            :key="idx"
+            class="menu-item"
+            :class="{ active: active === child.key }"
+          >
             <button
-                class="menu-button menu-nested-btn"
-                @click="activateNested(idx)">
-              <div class="menu-icon" v-if="hasIcon">
-                <component :is="child.icon" v-if="child.icon" />
+              class="menu-button menu-nested-btn"
+              @click="activateNested(idx)"
+            >
+              <div
+                v-if="hasIcon"
+                class="menu-icon"
+              >
+                <component
+                  :is="child.icon"
+                  v-if="child.icon"
+                />
               </div>
               <p>{{ child.label }}</p>
             </button>
@@ -161,7 +180,7 @@
     if (openedTopIdx.value === undefined)
       console.error('openedTopIdx is undefined');
 
-    const key = props.options[openedTopIdx.value].children[idx].key
+    const key = props.options[openedTopIdx.value].children[idx].key;
     if (key !== props.active)
       emit('update:value', key);
   }
@@ -179,6 +198,7 @@
         }
       }
     }
+    return false;
   });
 </script>
 

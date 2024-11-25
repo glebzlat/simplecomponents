@@ -1,16 +1,26 @@
 <template>
-  <button class="button"
-      :class="{ loading: loading }"
-      :disabled="frozen">
-    <div class="button-icon" v-if="slots['icon']">
+  <button
+    class="button"
+    :class="{ loading: loading }"
+    :disabled="frozen"
+  >
+    <div
+      v-if="slots['icon']"
+      class="button-icon"
+    >
       <slot name="icon" />
     </div>
-    <div class="button-loading" :class="{ loading: loading }"></div>
-    <div class="button-content"
-        :class="{
-          loading: loading && hasSlot('default') && !slots['icon'],
-          'icon-margin': slots['icon']
-        }">
+    <div
+      class="button-loading"
+      :class="{ loading: loading }"
+    />
+    <div
+      class="button-content"
+      :class="{
+        loading: loading && hasSlot('default') && !slots['icon'],
+        'icon-margin': slots['icon']
+      }"
+    >
       <slot />
     </div>
   </button>
@@ -30,7 +40,7 @@
     },
     shape: {
       type: String,
-      default: "rect"
+      default: 'rect'
     },
     frozen: {
       type: Boolean,
@@ -46,9 +56,9 @@
 
   const borderRadius = computed(() => {
     switch (props.shape.toLowerCase()) {
-    case "rect":
+    case 'rect':
       return 0.3;
-    case "round":
+    case 'round':
       return 1.5;
     default:
       console.error(`unknown value: ${props.shape}`);
@@ -116,7 +126,7 @@
   height: 100%;
   border-radius: calc(v-bind('borderRadius') * 1em);
   box-shadow: 0 0 0.5em 0.5em var(--button-shadow-color);
-   
+
   opacity: 0;
   transition: all 0.5s;
 }
@@ -146,7 +156,7 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--button-color, var(--button-default-color));
-  --_m: 
+  --_m:
     conic-gradient(#0000 10%,#000),
     linear-gradient(#000 0 0) content-box;
   -webkit-mask: var(--_m);

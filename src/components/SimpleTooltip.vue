@@ -3,7 +3,7 @@
     <slot name="main-content" />
     <div class="tooltip">
       <div class="tooltip-inner">
-        <slot name="tooltip-content"></slot>
+        <slot name="tooltip-content" />
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
    *   - `--tooltip-color`
    *   - `--tooltip-font-size`
    */
-  const props = defineProps({
+  defineProps({
     delay: {
       type: Number,
       default: 0.4
