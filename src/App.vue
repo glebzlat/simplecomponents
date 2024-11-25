@@ -71,15 +71,24 @@
         Frozen Button
       </Button>
     </div>
+    <div class="section">
+      <Button :loading="button2Loading" @click="button2Click">
+        <template #icon><component :is="simpleIcon" /></template>
+        With Icon
+      </Button>
+    </div>
   </div>
   <div class="card">
-    <Menu :options="menuOptions" />
+    <p v-if="!activeMenuItem">Choose an item</p>
+    <p v-else>Chosen: {{ activeMenuItem }}</p>
+    <Menu :options="menuOptions" @update:value="setActiveMenuItem"
+        :active="activeMenuItem" />
   </div>
 </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { ref, h } from 'vue';
 
   import CircularIndicator from './components/CircularIndicator.vue';
   import Switch from './components/Switch.vue';
@@ -111,30 +120,68 @@
 
   const button1 = ref(null);
   const button1Loading = ref(false);
+  const button2Loading = ref(false);
 
   function button1Click() {
     button1Loading.value = true;
-    setTimeout(() => {
-      button1Loading.value = false;
-    }, 1000);
+    setTimeout(() => button1Loading.value = false, 1000);
   }
+
+  function button2Click() {
+    button2Loading.value = true;
+    setTimeout(() => button2Loading.value = false, 2000);
+  }
+
+  const simpleIcon = h('svg',
+    {
+      xmlns: 'http://www.w3.org/2000/svg',
+      viewBox: '0 0 24 24',
+      width: '24',
+      height: '24',
+      fill: 'currentColor'
+    },
+    [
+      h('circle', { cx: '12', cy: '12', r: '10', fill: '#4CAF50' }), // Green circle
+      h('rect', { width: '12', height: '12', x: '6', y: '6', rx: '3', ry: '3',fill: '#fff' })
+  ]);
 
   const menuOptions = [
     {
       label: 'Item 1',
-      value: 'item1',
+      icon: simpleIcon,
       children: [
         {
-          label: 'Sub Item 1',
-          value: 'item1sub1'
+          key: 'item1sub1',
+          label: 'Sub Item 1'
+        },
+        {
+          key: 'item1sub2',
+          label: 'Sub Item 2'
         }
       ]
     },
     {
       label: 'Item 2',
-      value: 'item2'
+      icon: simpleIcon,
+      children: [
+        {
+          key: 'item2sub1',
+          label: 'Sub Item 1'
+        },
+      ]
+    },
+    {
+      key: 'item3',
+      label: 'Item 3'
     }
   ];
+
+  const activeMenuItem = ref(undefined);
+
+  function setActiveMenuItem(key) {
+    console.log(`active menu item: ${key}`);
+    activeMenuItem.value = key;
+  }
 
 </script>
 

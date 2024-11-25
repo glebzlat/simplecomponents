@@ -2,9 +2,15 @@
   <button class="button"
       :class="{ loading: loading }"
       :disabled="frozen">
+    <div class="button-icon" v-if="slots['icon']">
+      <slot name="icon" />
+    </div>
     <div class="button-loading" :class="{ loading: loading }"></div>
     <div class="button-content"
-        :class="{ loading: loading && hasSlot('default') }">
+        :class="{
+          loading: loading && hasSlot('default') && !slots['icon'],
+          'icon-margin': slots['icon']
+        }">
       <slot />
     </div>
   </button>
@@ -83,6 +89,8 @@
   font-size: var(--button-font-size, var(--button-default-font-size));
   color: var(--button-color, var(--button-default-color));
   background-color: var(--button-bg-color, var(--button-default-bg-color));
+
+  transition: all 0.2s;
 }
 
 .button:disabled {
@@ -119,6 +127,16 @@
   transition: 0s;
 }
 
+.button-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1em;
+  aspect-ratio: 1 / 1;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
 .button-loading {
   position: absolute;
   top: 0.7em;
@@ -143,6 +161,10 @@
   to { transform: rotate(1turn) }
 }
 
+.button.loading .button-icon {
+  opacity: 0;
+}
+
 .button-loading.loading {
   transition: opacity 0.5s ease-in;
   opacity: 1;
@@ -156,6 +178,10 @@
 
 .button-content.loading {
   margin-left: 1.5em;
+}
+
+.button-content.icon-margin {
+  margin-left: 0.5em;
 }
 
 </style>
