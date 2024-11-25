@@ -1,17 +1,17 @@
-import CircularIndicator from './components/CircularIndicator.vue';
-import Switch from './components/Switch.vue';
-import Checkbox from './components/Checkbox.vue';
-import Tooltip from './components/Tooltip.vue';
-import Dropdown from './components/Dropdown.vue';
-import Button from './components/Button.vue';
-import Menu from './components/Menu.vue';
+import SimpleCircularIndicator from './components/SimpleCircularIndicator.vue';
+import SimpleSwitch from './components/SimpleSwitch.vue';
+import SimpleCheckbox from './components/SimpleCheckbox.vue';
+import SimpleTooltip from './components/SimpleTooltip.vue';
+import SimpleDropdown from './components/SimpleDropdown.vue';
+import SimpleButton from './components/SimpleButton.vue';
+import SimpleMenu from './components/SimpleMenu.vue';
 
 export {
-  CircularIndicator,
-  Switch,
-  Checkbox,
-  Tooltip,
-  Dropdown,
-  Button,
-  Menu
+  SimpleCircularIndicator,
+  SimpleSwitch,
+  SimpleCheckbox,
+  SimpleTooltip,
+  SimpleDropdown,
+  SimpleButton,
+  SimpleMenu
 };
