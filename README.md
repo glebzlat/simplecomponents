@@ -1,4 +1,4 @@
-# mycomponents
+# simplecomponents
 
 This is a collection of my Vue.js components. I'll try to keep them as simple
 as I can, without tons of capabilities: just needed functionality. I
