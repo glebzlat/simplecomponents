@@ -3,8 +3,8 @@ import App from './App.vue';
 
 import './assets/main.css';
 
-import ClickOutside from './ClickOutside';
+import SimpleComponents from './index';
 
 const app = createApp(App);
-app.directive('click-outside', ClickOutside);
+app.use(SimpleComponents);
 app.mount('#app');

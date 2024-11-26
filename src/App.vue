@@ -162,14 +162,6 @@
 <script setup>
   import { ref, h } from 'vue';
 
-  import SimpleCircularIndicator from './components/SimpleCircularIndicator.vue';
-  import SimpleSwitch from './components/SimpleSwitch.vue';
-  import SimpleCheckbox from './components/SimpleCheckbox.vue';
-  import SimpleTooltip from './components/SimpleTooltip.vue';
-  import SimpleDropdown from './components/SimpleDropdown.vue';
-  import SimpleButton from './components/SimpleButton.vue';
-  import SimpleMenu from './components/SimpleMenu.vue';
-
   const label = 'CPU';
   const value = ref('100');
 

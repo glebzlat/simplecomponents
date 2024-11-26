@@ -6,6 +6,8 @@ import SimpleDropdown from './components/SimpleDropdown.vue';
 import SimpleButton from './components/SimpleButton.vue';
 import SimpleMenu from './components/SimpleMenu.vue';
 
+import ClickOutside from './directives/ClickOutside';
+
 export {
   SimpleCircularIndicator,
   SimpleSwitch,
@@ -13,5 +15,18 @@ export {
   SimpleTooltip,
   SimpleDropdown,
   SimpleButton,
-  SimpleMenu
+  SimpleMenu,
+  ClickOutside
 };
+
+export default function install(app) {
+  app
+    .component('SimpleCircularIndicator', SimpleCircularIndicator)
+    .component('SimpleSwitch', SimpleSwitch)
+    .component('SimpleCheckbox', SimpleCheckbox)
+    .component('SimpleTooltip', SimpleTooltip)
+    .component('SimpleDropdown', SimpleDropdown)
+    .component('SimpleButton', SimpleButton)
+    .component('SimpleMenu', SimpleMenu)
+    .directive('click-outside', ClickOutside);
+}
