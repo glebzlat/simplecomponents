@@ -256,6 +256,7 @@
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
@@ -272,9 +273,10 @@
 
 .section {
   display: flex;
-  gap: 3em;
+  gap: 1em 3em;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   padding: 10px;
   min-width: 200px;
   width: 100%;
