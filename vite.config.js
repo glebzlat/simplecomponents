@@ -10,5 +10,15 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        app: './example/index.html'
+      }
+    }
+  },
+  server: {
+    open: '/index.html'
   }
 });

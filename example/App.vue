@@ -4,7 +4,6 @@
       <SimpleCircularIndicator
         :percentage="parseInt(value)"
         :label="label"
-        :thres-colors="{&quot;70&quot;:&quot;yellow&quot;,&quot;80&quot;:&quot;red&quot;}"
       />
       <input
         v-model="value"
