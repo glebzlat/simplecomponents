@@ -121,14 +121,14 @@
           shape="round"
           @click="button1Click"
         >
-          My SimpleButton
+          My Button
         </SimpleButton>
         <SimpleButton
           :loading="button1Loading"
           shape="round"
           :frozen="true"
         >
-          Frozen SimpleButton
+          Frozen Button
         </SimpleButton>
       </div>
       <div class="section">
