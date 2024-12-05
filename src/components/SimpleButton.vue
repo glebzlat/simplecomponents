@@ -137,6 +137,11 @@
   transition: 0s;
 }
 
+.button:focus {
+  box-shadow: 0 0 1px 1px var(--button-hover-bg-color,
+    var(--button-default-hover-bg-color));
+}
+
 .button-icon {
   display: flex;
   justify-content: center;
