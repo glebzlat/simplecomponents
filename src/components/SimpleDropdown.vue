@@ -9,6 +9,7 @@
       class="dropdown-button"
       :class="{active: active}"
       @click="toggle"
+      ref="dropdownButton"
     >
       <p class="dropdown-text">
         {{ options[modelValue] }}
@@ -28,6 +29,8 @@
         <button
           class="item-button"
           @click="choose(idx)"
+          tabindex="-1"
+          ref="buttons"
         >
           <p class="dropdown-text">
             {{ val }}
@@ -70,8 +73,22 @@
 
   const emit = defineEmits(['update:modelValue']);
 
+  const dropdownButton = ref(null);
+  const buttons = ref([]);
+
   function toggle() {
     active.value = !active.value;
+
+    if (active.value) {
+      buttons.value.forEach((el) => {
+        el.tabIndex = 0;
+      });
+    } else {
+      buttons.value.forEach((el) => {
+        el.tabIndex = -1;
+      })
+      dropdownButton.value.focus();
+    }
   }
 
   function close() {
