@@ -18,6 +18,7 @@
         <div class="show-icon-off" v-if="hideInput">
           <slot name="showIconOff"><EyeOff /></slot>
         </div>
+        <div class="show-button-background"></div>
       </button>
       <div class="delimiter suffix-delimiter"></div>
     </div>
@@ -120,9 +121,10 @@
     ---input-color: var(--input-color, #000);
     ---input-placeholder-color: var(--input-placeholder-color, #888);
     ---input-bg-color: var(--input-bg-color, #fff);
-    ---input-border-color: var(--input-border-color, #808080);
+    ---input-border-color: var(--input-border-color, #c8c8c8);
     ---input-focus-bg-color: var(--input-focus-bg-color);
     ---input-error-color: var(--input-error-bg-color, red);
+    ---input-focus-border-color: var(--input-focus-border-color, #2ecc71);
 
     position: relative;
     display: flex;
@@ -131,6 +133,12 @@
     padding: 0 0.5em;
     border: 0.06em solid var(---input-border-color);
     border-radius: calc(1em * v-bind("borderRadius"));
+    transition: border 0.2s ease-in-out;
+  }
+
+  .input-wrapper:hover,
+  .input-wrapper:focus-within {
+    border: 0.1em solid var(---input-focus-border-color);
   }
 
   .input-field {
@@ -181,8 +189,28 @@
   }
 
   .show-button {
+    position: relative;
     width: 1em;
     height: 1em;
+    border-radius: 0.3em;
+    overflow: hidden;
+  }
+
+  .show-button-background {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    background-color: var(---input-focus-border-color);
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .show-button:focus .show-button-background,
+  .show-button:hover .show-button-background {
+    opacity: 0.3;
   }
 
   .delimiter {
