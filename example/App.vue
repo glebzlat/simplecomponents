@@ -155,6 +155,17 @@
         @update:value="setActiveMenuItem"
       />
     </div>
+    <div class="card">
+      <SimpleInput placeholder="example">
+        <template #prefix>https://</template>
+        <template #suffix>.com</template>
+      </SimpleInput>
+      <SimpleInput placeholder="password" :hidden="true" >
+      </SimpleInput>
+      <SimpleInput :format="ipFormat">
+        <template #prefix>IPv4</template>
+      </SimpleInput>
+    </div>
   </div>
 </template>
 
@@ -246,6 +257,12 @@
     activeMenuItem.value = key;
   }
 
+  const ipFormat = new RegExp(
+    /^(1?\d?\d|2[0-5][0-5])\./.source +
+    /(1?\d?\d|2[0-5][0-5])\./.source +
+    /(1?\d?\d|2[0-5][0-5])\./.source +
+    /(1?\d?\d|2[0-5][0-5])$/.source
+  );
 </script>
 
 <style scoped>
