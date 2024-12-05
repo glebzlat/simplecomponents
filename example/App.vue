@@ -162,9 +162,10 @@
       </SimpleInput>
       <SimpleInput placeholder="password" :hidden="true" >
       </SimpleInput>
-      <SimpleInput :format="ipFormat">
+      <SimpleInput :format="ipFormat" @input="handleInputIP">
         <template #prefix>IPv4</template>
       </SimpleInput>
+      <p>Input IP: {{ inputIP }}</p>
     </div>
   </div>
 </template>
@@ -263,6 +264,12 @@
     /(1?\d?\d|2[0-5][0-5])\./.source +
     /(1?\d?\d|2[0-5][0-5])$/.source
   );
+
+  const inputIP = ref('nothing yet');
+
+  function handleInputIP(text) {
+    inputIP.value = text ? text : 'wrong format';
+  }
 </script>
 
 <style scoped>

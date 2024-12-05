@@ -51,6 +51,8 @@
     }
   });
 
+  const emit = defineEmits(['input']);
+
   import { computed, ref, useSlots } from 'vue';
   import EyeOn from '../icons/EyeOn.vue';
   import EyeOff from '../icons/EyeOff.vue';
@@ -87,6 +89,8 @@
   function handleInput(event) {
     inputText.value = event.target.value;
     typedIn.value = true;
+
+    emit('input', errorMsg.value ? null : inputText.value);
   }
 
   const formatRe = props.format ? new RegExp(props.format) : null;
@@ -128,7 +132,7 @@
     border: 0.06em solid var(---input-border-color);
     border-radius: calc(1em * v-bind("borderRadius"));
   }
-  
+
   .input-field {
     color: var(---input-color);
     background-color: var(---input-bg-color);
