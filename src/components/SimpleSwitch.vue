@@ -1,5 +1,5 @@
 <template>
-  <div class="switch">
+  <div class="switch" tabindex="0" @keypress.enter="toggle">
     <div
       class="slider"
       :class="{ checked: modelValue, frozen: frozen }"
@@ -72,6 +72,7 @@
   position: relative;
   width: calc(46px * v-bind('ratio'));
   height: calc(24px * v-bind('ratio'));
+  outline: none;
 }
 
 .slider {
@@ -115,7 +116,13 @@
     var(--switch-default-active-color));
 }
 
-.switch:hover .slider.frozen {
+.switch:focus .slider {
+  box-shadow: 0 0 1px calc(1px * v-bind('ratio')) var(--switch-active-color,
+    var(--switch-default-active-color));
+}
+
+.switch:hover .slider.frozen,
+.switch:focus .slider.frozen {
   box-shadow: none;
 }
 
