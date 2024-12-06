@@ -238,6 +238,7 @@
 
   .error-wrapper {
     position: absolute;
+    z-index: 1;
     top: 100%;
     left: 0;
     font-size: 0.9em;
@@ -248,6 +249,7 @@
     opacity: 0;
     height: 0;
     color: var(---input-error-color);
+    background-color: var(---input-bg-color);
     transition: all 0.3s;
   }
 
