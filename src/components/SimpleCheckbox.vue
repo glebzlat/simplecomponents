@@ -5,7 +5,7 @@
       class="checkbox"
       @click="toggle"
       @keypress.enter="toggle"
-      ref="inputElement"
+      :tabindex="props.frozen ? -1 : 0"
     >
     <div
       class="checkmark"
@@ -40,19 +40,12 @@
     }
   });
 
-  import { ref, watch } from 'vue';
-
   const emit = defineEmits(['update:modelValue']);
 
   function toggle() {
     if (!props.frozen)
       emit('update:modelValue', !props.modelValue);
   }
-
-  const inputElement = ref(null);
-  watch(() => props.frozen, () => {
-    inputElement.value.tabIndex = props.frozen ? -1 : 0;
-  });
 
   let ratio;
   if (typeof props.size === 'string') {
