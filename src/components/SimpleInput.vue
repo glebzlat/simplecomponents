@@ -30,6 +30,10 @@
 
 <script setup>
   const props = defineProps({
+    modelValue: {
+      type: String,
+      default: null
+    },
     placeholder: {
       type: String,
       default: 'Text input'
@@ -84,7 +88,7 @@
     hideInput.value = !hideInput.value;
   }
 
-  const inputText = ref('');
+  const inputText = ref(props.modelValue);
   const typedIn = ref(false);
 
   function handleInput(event) {

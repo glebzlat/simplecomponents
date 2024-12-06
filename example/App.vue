@@ -260,11 +260,7 @@
 
   const ipFormat = /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$/;
 
-  const inputIP = ref('nothing yet');
-
-  function handleInputIP(text) {
-    inputIP.value = text ? text : 'wrong format';
-  }
+  const inputIP = ref('192.168.1.1');
 </script>
 
 <style scoped>
