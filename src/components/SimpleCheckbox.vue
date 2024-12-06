@@ -4,6 +4,8 @@
       type="checkbox"
       class="checkbox"
       @click="toggle"
+      @keypress.enter="toggle"
+      ref="inputElement"
     >
     <div
       class="checkmark"
@@ -38,12 +40,19 @@
     }
   });
 
+  import { ref, watch } from 'vue';
+
   const emit = defineEmits(['update:modelValue']);
 
   function toggle() {
     if (!props.frozen)
       emit('update:modelValue', !props.modelValue);
   }
+
+  const inputElement = ref(null);
+  watch(() => props.frozen, () => {
+    inputElement.value.tabIndex = props.frozen ? -1 : 0;
+  });
 
   let ratio;
   if (typeof props.size === 'string') {
@@ -104,6 +113,15 @@
 .checkmark.frozen {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+.checkbox-container:focus-within .checkmark {
+  box-shadow: 0 0 1px calc(1px * v-bind('ratio'))
+    var(--checkbox-active-color, var(--checkbox-default-active-color));
+}
+
+.checkbox-container:focus-within .checkmark.frozen {
+  box-shadow: none;
 }
 
 .checkmark::after {
