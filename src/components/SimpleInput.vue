@@ -52,7 +52,7 @@
     }
   });
 
-  const emit = defineEmits(['input']);
+  const emit = defineEmits(['input', 'update:modelValue']);
 
   import { computed, ref, useSlots } from 'vue';
   import EyeOn from '../icons/EyeOn.vue';
@@ -91,7 +91,9 @@
     inputText.value = event.target.value;
     typedIn.value = true;
 
-    emit('input', errorMsg.value ? null : inputText.value);
+    const data = errorMsg.value ? null : inputText.value;
+    emit('input', data);
+    emit('update:modelValue', data);
   }
 
   const formatRe = props.format ? new RegExp(props.format) : null;

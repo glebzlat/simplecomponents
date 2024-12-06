@@ -162,7 +162,7 @@
       </SimpleInput>
       <SimpleInput placeholder="password" :hidden="true" >
       </SimpleInput>
-      <SimpleInput :format="ipFormat" @input="handleInputIP">
+      <SimpleInput :format="ipFormat" v-model="inputIP">
         <template #prefix>IPv4</template>
       </SimpleInput>
       <p>Input IP: {{ inputIP }}</p>
