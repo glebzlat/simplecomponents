@@ -26,6 +26,7 @@
             v-if="item.children"
             class="menu-arrow"
           />
+          <div class="menu-button-inner-border"></div>
         </button>
         <ul
           v-if="item.children"
@@ -41,6 +42,7 @@
           >
             <button
               class="menu-button menu-nested-btn"
+              tabindex="0"
               @click="activateNested(idx)"
             >
               <div
@@ -53,6 +55,7 @@
                 />
               </div>
               <p>{{ child.label }}</p>
+              <div class="menu-button-inner-border"></div>
             </button>
           </li>
         </ul>
@@ -134,10 +137,18 @@
     return null;
   }
 
+  function setInnerButtonsTabIndex(lst, idx) {
+    const buttons = lst.getElementsByTagName('button');
+    for (let i = 0; i < buttons.length; ++i)
+      buttons[i].tabIndex = idx;
+  }
+
   function expandList(lst) {
     lst.style.maxHeight = lst.scrollHeight + 'px';
     lst.style.opacity = '1';
     lst.style.marginTop = '0.5em';
+    console.log(lst.getElementsByTagName('button'))
+    setInnerButtonsTabIndex(lst, 0);
   }
 
   function collapseList(lst) {
@@ -145,6 +156,8 @@
     lst.style.maxHeight = '0';
     lst.style.opacity = '0';
     lst.style.marginTop = '0';
+
+    setInnerButtonsTabIndex(lst, -1);
   }
 
   function activateTop(idx) {
@@ -238,6 +251,7 @@
 }
 
 .menu-button {
+  position: relative;
   display: flex;
   gap: 0 0.7em;
   align-items: center;
@@ -247,6 +261,25 @@
 
   color: var(--menu-color, var(--menu-default-color));
   transition: 0.2s;
+}
+
+.menu-button-inner-border {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0.3em;
+  pointer-events: none;
+  background-color: transparent;
+  border: 1px solid var(--menu-active-bg-color,
+    var(--menu-default-active-bg-color));
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.menu-button:focus .menu-button-inner-border {
+  opacity: 1;
 }
 
 .menu-icon {
