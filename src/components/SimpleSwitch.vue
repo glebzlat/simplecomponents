@@ -1,5 +1,6 @@
 <template>
-  <div class="switch" tabindex="0" @keypress.enter="toggle">
+  <div class="switch" :tabindex="props.frozen ? -1 : 0"
+       @keypress.enter="toggle">
     <div
       class="slider"
       :class="{ checked: modelValue, frozen: frozen }"
@@ -60,7 +61,6 @@
   } else {
     ratio = props.size;
   }
-
 </script>
 
 <style scoped>
