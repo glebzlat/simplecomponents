@@ -258,12 +258,7 @@
     activeMenuItem.value = key;
   }
 
-  const ipFormat = new RegExp(
-    /^(1?\d?\d|2[0-5][0-5])\./.source +
-    /(1?\d?\d|2[0-5][0-5])\./.source +
-    /(1?\d?\d|2[0-5][0-5])\./.source +
-    /(1?\d?\d|2[0-5][0-5])$/.source
-  );
+  const ipFormat = /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$/;
 
   const inputIP = ref('nothing yet');
 
