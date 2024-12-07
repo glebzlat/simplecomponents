@@ -42,7 +42,7 @@
           >
             <button
               class="menu-button menu-nested-btn"
-              tabindex="0"
+              tabindex="-1"
               @click="activateNested(idx)"
             >
               <div
@@ -147,7 +147,6 @@
     lst.style.maxHeight = lst.scrollHeight + 'px';
     lst.style.opacity = '1';
     lst.style.marginTop = '0.5em';
-    console.log(lst.getElementsByTagName('button'))
     setInnerButtonsTabIndex(lst, 0);
   }
 
