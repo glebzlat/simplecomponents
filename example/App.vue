@@ -336,14 +336,6 @@
   --checkbox-inactive-color: #ccc;
 }
 
-.dropdown-settings {
-  --dropdown-color: black;
-  --dropdown-content-bg-color: #e1e1e1;
-  --dropdown-bg-color: #e1e1e1;
-  --dropdown-hover-bg-color: #2ecc71;
-  --dropdown-item-hover-bg-color: #2ecc71;
-}
-
 .dropdown {
   width: 200px;
 }

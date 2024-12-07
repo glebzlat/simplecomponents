@@ -29,6 +29,7 @@
         <button
           class="item-button"
           @click="choose(idx)"
+          :class="{ active: modelValue === idx }"
           tabindex="-1"
           ref="buttons"
         >
@@ -48,12 +49,13 @@
    *
    * Auto resizable dropdown list component. It uses the following CSS
    * variables:
-   *   - `--dropdown-font-size`
    *   - `--dropdown-color`
    *   - `--dropdown-bg-color`
    *   - `--dropdown-hover-bg-color`
-   *   - `--dropdown-content-bg-color`
    *   - `--dropdown-item-hover-bg-color`
+   *   - `--dropdown-active-color`
+   *   - `--dropdown-active-bg-color`
+   *   - `--dropdown-focus-outline-color`
    *   - `--dropdown-max-height`
    */
   defineProps({
@@ -124,37 +126,40 @@
 
 <style scoped>
 .dropdown-container {
-  --dropdown-default-bg-color: #e1e1e1;
-  --dropdown-default-fg-color: #000;
+  ---dropdown-color: var(--dropdown-color, #000);
+  ---dropdown-bg-color: var(--dropdown-bg-color, #ededed);
+  ---dropdown-hover-bg-color: var(--dropdown-hover-bg-color, #2ecc7144);
+  ---dropdown-item-hover-bg-color: var(--dropdown-item-hover-bg-color,
+    var(---dropdown-hover-bg-color));
+  ---dropdown-active-color: var(--dropdown-active-color,
+    var(---dropdown-color));
+  ---dropdown-active-bg-color: var(--dropdown-active-bg-color, #2ecc71);
+  ---dropdown-focus-outline-color: var(--dropdown-focus-outline-color,
+    var(---dropdown-active-bg-color));
+  ---dropdown-max-height: var(--dropdown-max-height, auto);
 
   position: relative;
-  font-size: var(--dropdown-font-size, inherit);
-  color: var(--dropdown-color, #000);
+  color: var(---dropdown-color);
 }
 
 .dropdown-button {
-  --dropdown-button-bg-color: var(--dropdown-bg-color,
-    var(--dropdown-default-bg-color));
-
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0 0.8em;
   width: 100%;
   padding: 0.7em;
-  background-color: var(--dropdown-bg-color, var(--dropdown-default-bg-color));
+  background-color: var(---dropdown-bg-color);
   border-radius: 0.3em;
   transition: all 0.2s ease-in-out;
 }
 
 .dropdown-button:hover {
-  background-color: var(--dropdown-hover-bg-color,
-    var(--dropdown-button-bg-color));
+  background-color: var(---dropdown-hover-bg-color);
 }
 
 .dropdown-button:focus {
-  box-shadow: 0 0 1px 1px var(--dropdown-hover-bg-color,
-    var(--dropdown-button-bg-color));
+  box-shadow: 0 0 1px 1px var(---dropdown-focus-outline-color);
 }
 
 .dropdown-text {
@@ -164,7 +169,7 @@
 .dropdown-arrow {
   width: 0.4em;
   aspect-ratio: 1 / 1;
-  border-color: var(--dropdown-color, var(--dropdown-default-fg-color));
+  border-color: var(---dropdown-color);
   border-style: solid;
   border-width: 0.15em 0 0 0.15em;
   transform-origin: 0.15em 0.15em;
@@ -181,11 +186,10 @@
   z-index: 1;
   top: calc(100% + 0.5em);
   width: calc(v-bind('width') * 1px);
-  max-height: var(--dropdown-max-height, auto);
+  max-height: var(---dropdown-max-height);
   padding: 0.3em;
   border-radius: 0.3em;
-  background-color: var(--dropdown-content-bg-color,
-    var(--dropdown-default-bg-color));
+  background-color: var(---dropdown-bg-color);
   list-style: none;
   overflow-y: auto;
   pointer-events: none;
@@ -203,17 +207,22 @@
   max-width: 100%;
   padding: 0.4em;
   border-radius: 0.3em;
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  outline: 0.06em solid transparent;
 }
 
 .item-button:hover {
-  background-color: var(--dropdown-item-hover-bg-color,
-    var(--dropdown-content-bg-color));
+  background-color: var(---dropdown-item-hover-bg-color);
 }
 
 .item-button:focus {
-  outline: 1px solid var(--dropdown-item-hover-bg-color,
-    var(--dropdown-content-bg-color));
+  outline-color: var(---dropdown-focus-outline-color);
+}
+
+.dropdown-button.active,
+.item-button.active {
+  background-color: var(---dropdown-active-bg-color);
+  color: var(---dropdown-active-color);
 }
 
 .content.active {
