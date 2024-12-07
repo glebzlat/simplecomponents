@@ -22,11 +22,13 @@
       class="text"
       x="50%"
       y="46%"
+      font-size="3.5"
     >{{ label }}</text>
     <text
       class="text"
       x="50%"
       :y="percentageY"
+      font-size="3.5"
     >
       {{ percentage }}{{ isNaN(percentage) ? '' : '%' }}
     </text>
@@ -117,7 +119,6 @@
 }
 
 .text {
-  font-size: 0.2em;
   text-anchor: middle;
   fill: #555;
 }
