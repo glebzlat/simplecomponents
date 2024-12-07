@@ -190,7 +190,7 @@
   position: absolute;
   z-index: 1;
   top: calc(100% + 0.5em);
-  width: calc(v-bind('width') * 0.06em);
+  width: calc(v-bind('width') * 0.0625em);
   max-height: var(---dropdown-max-height);
   padding: 0.3em;
   border-radius: 0.3em;
