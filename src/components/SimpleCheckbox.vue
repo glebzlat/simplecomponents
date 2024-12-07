@@ -54,10 +54,10 @@
       ratio = 0.7;
       break;
     case 'medium':
-      ratio = 1;
+      ratio = 0.85;
       break;
-    case 'big':
-      ratio = 1.5;
+    case 'large':
+      ratio = 1;
       break;
     default:
       console.warn(`unknown size value: ${props.size}`);
