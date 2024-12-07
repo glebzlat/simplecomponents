@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="card circular-indicator-color-green">
+    <div class="card">
       <SimpleCircularIndicator
         :percentage="parseInt(value)"
         :label="label"
@@ -296,11 +296,6 @@
   width: 100%;
   border: 1px solid grey;
   border-radius: 5px;
-}
-
-.circular-indicator-color-green {
-  --circular-indicator-bg-color: #eee;
-  --circular-indicator-color: #2ecc71;
 }
 
 .switch-color-red {
