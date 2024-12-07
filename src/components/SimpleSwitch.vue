@@ -65,13 +65,17 @@
 
 <style scoped>
 .switch {
-  --switch-default-inactive-color: #e1e1e1;
-  --switch-default-active-color: #63e060;
-  --switch-default-slider-color: #fff;
+  ---switch-color: var(--switch-color, #e8e8e8);
+  ---switch-active-color: var(--switch-active-color, #63e060);
+  ---switch-slider-color: var(--switch-slider-color, #fff);
+  ---switch-slider-active-color: var(--switch-slider-active-color,
+    var(---switch-slider-color));
+  ---switch-hover-color: var(--switch-hover-color, var(---switch-active-color));
+  ---switch-focus-color: var(--switch-focus-color, var(---switch-hover-color));
 
   position: relative;
-  width: calc(46px * v-bind('ratio'));
-  height: calc(24px * v-bind('ratio'));
+  width: calc(2.88em * v-bind('ratio'));
+  height: calc(1.5em * v-bind('ratio'));
   outline: none;
 }
 
@@ -83,9 +87,8 @@
   bottom: 0;
   left: 0;
   transition: 0.4s;
-  background-color: var(--switch-inactive-color,
-    var(--switch-default-inactive-color));
-  border-radius: calc(24px * v-bind('ratio'));
+  background-color: var(---switch-color);
+  border-radius: calc(1.5em * v-bind('ratio'));
 }
 
 .slider.frozen {
@@ -94,31 +97,29 @@
 }
 
 .slider.checked {
-  background-color: var(--switch-active-color,
-    var(--switch-default-active-color));
+  background-color: var(---switch-active-color)
 }
 
 .slider::before {
   position: absolute;
   content: "";
-  width: calc(16px * v-bind('ratio'));
+  width: calc(1em * v-bind('ratio'));
   aspect-ratio: 1 / 1;
-  left: calc(4px * v-bind('ratio'));
-  bottom: calc(4px * v-bind('ratio'));
-  background-color: var(--switch-slider-color,
-    var(--switch-default-slider-color));
+  left: calc(0.25em * v-bind('ratio'));
+  bottom: calc(0.25em * v-bind('ratio'));
+  background-color: var(---switch-slider-color);
   transition: 0.4s;
   border-radius: 50%;
 }
 
 .switch:hover .slider {
-  box-shadow: 0 0 1px calc(1px * v-bind('ratio')) var(--switch-active-color,
-    var(--switch-default-active-color));
+  box-shadow: 0 0 0.062em calc(0.06em * v-bind('ratio'))
+    var(---switch-hover-color);
 }
 
 .switch:focus .slider {
-  box-shadow: 0 0 1px calc(1px * v-bind('ratio')) var(--switch-active-color,
-    var(--switch-default-active-color));
+  box-shadow: 0 0 0.062em calc(0.06em * v-bind('ratio'))
+    var(---switch-focus-color);
 }
 
 .switch:hover .slider.frozen,
@@ -127,7 +128,7 @@
 }
 
 .checked::before {
-  transform: translateX(calc(22px * v-bind('ratio')));
+  transform: translateX(calc(1.38em * v-bind('ratio')));
 }
 
 </style>
