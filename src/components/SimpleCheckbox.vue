@@ -22,8 +22,9 @@
    *
    * Checkbox component expects the following CSS variables to be set on
    * parent element:
+   *   - `--checkbox-color`
    *   - `--checkbox-active-color`
-   *   - `--checkbox-inactive-color`
+   *   - `--checkbox-focus-color`
    */
   const props = defineProps({
     size: {
