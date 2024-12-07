@@ -15,8 +15,8 @@
    * @displayName Toggle switch
    *
    * Switch component uses the following CSS variables:
+   *   - `--switch-color`
    *   - `--switch-active-color`
-   *   - `--switch-inactive-color`
    *   - `--switch-slider-color`
    */
   const props = defineProps({

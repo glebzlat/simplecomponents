@@ -305,20 +305,14 @@
 
 .switch-color-red {
   --switch-active-color: #cc2e2e;
-  --switch-inactive-color: #ccc;
-  --switch-slider-color: #fff;
 }
 
 .switch-color-green {
   --switch-active-color: #2ecc71;
-  --switch-inactive-color: #ccc;
-  --switch-slider-color: #fff;
 }
 
 .switch-color-blue {
   --switch-active-color: #397dff;
-  --switch-inactive-color: #ccc;
-  --switch-slider-color: #fff;
 }
 
 .checkbox-color-red {
