@@ -334,8 +334,4 @@
   width: 200px;
 }
 
-.button-settings {
-  --button-hover-bg-color: #2ecc71;
-}
-
 </style>

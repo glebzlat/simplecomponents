@@ -30,6 +30,13 @@
   /**
    * Button component
    * @displayName Button
+   *
+   * The following CSS variables alter the component appearance:
+   *   - `--button-color`
+   *   - `--button-bg-color`
+   *   - `--button-padding`
+   *   - `--button-hover-bg-color`
+   *   - `--button-focus-color`
    */
   import { computed, useSlots } from 'vue';
 
@@ -76,29 +83,25 @@
 
 <style scoped>
 .button {
-  --button-default-color: #000;
-  --button-default-bg-color: #e1e1e1;
-  --button-default-hover-color: var(--button-default-color);
-  --button-default-hover-bg-color: var(--button-default-bg-color);
-  --button-default-font-size: inherit;
-  --button-default-padding: 0.7em;
+  ---button-color: var(--button-color, #000);
+  ---button-bg-color: var(--button-bg-color, #e8e8e8);
+  ---button-padding: var(--button-padding, 0.5em);
+  ---button-hover-bg-color: var(--button-hover-bg-color, #c7f1d9);
+  ---button-focus-color: var(--button-focus-color,
+    var(---button-active-bg-color));
 
-  --button-shadow-color: var(--button-hover-bg-color,
-    var(--button-default-hover-bg-color));
-  --button-result-padding: var(--button-padding,
-    var(--button-default-padding));
+  ---button-shadow-color: var(---button-active-bg-color);
 
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--button-result-padding);
+  padding: var(---button-padding);
   border-radius: calc(v-bind('borderRadius') * 1em);
-  width: calc(v-bind('width') + var(--button-result-padding) * 2);
+  width: calc(v-bind('width') + var(---button-padding) * 2);
 
-  font-size: var(--button-font-size, var(--button-default-font-size));
-  color: var(--button-color, var(--button-default-color));
-  background-color: var(--button-bg-color, var(--button-default-bg-color));
+  color: var(---button-color);
+  background-color: var(---button-bg-color);
 
   transition: all 0.2s;
 }
@@ -109,9 +112,7 @@
 }
 
 .button:not([disabled]):hover {
-  background-color: var(--button-hover-bg-color,
-    var(--button-default-hover-bg-color));
-  color: var(--button-hover-color, var(--button-default-hover-color));
+  background-color: var(---button-hover-bg-color);
 }
 
 .button:not([disabled]):after {
@@ -125,7 +126,7 @@
   width: 100%;
   height: 100%;
   border-radius: calc(v-bind('borderRadius') * 1em);
-  box-shadow: 0 0 0.5em 0.5em var(--button-shadow-color);
+  box-shadow: 0 0 0.5em 0.5em var(---button-shadow-color);
 
   opacity: 0;
   transition: all 0.5s;
@@ -138,8 +139,7 @@
 }
 
 .button:focus {
-  box-shadow: 0 0 1px 1px var(--button-hover-bg-color,
-    var(--button-default-hover-bg-color));
+  box-shadow: 0 0 0.0625em 0.0625em var(---button-focus-color);
 }
 
 .button-icon {
@@ -154,13 +154,13 @@
 
 .button-loading {
   position: absolute;
-  top: 0.7em;
-  left: 0.7em;
+  top: var(---button-padding);
+  left: var(---button-padding);
   width: 1em;
   padding: 0.1em;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--button-color, var(--button-default-color));
+  background: var(---button-color);
   --_m:
     conic-gradient(#0000 10%,#000),
     linear-gradient(#000 0 0) content-box;
