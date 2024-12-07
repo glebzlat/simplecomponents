@@ -73,7 +73,7 @@
 
   const constrainedPercentage = computed(() => {
     if (typeof props.percentage !== 'number' || isNaN(props.percentage))
-      return inMax;
+      return inMin;
     return Math.min(Math.max(props.percentage, inMin), inMax);
   });
 
