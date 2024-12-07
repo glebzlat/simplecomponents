@@ -87,16 +87,17 @@
 
 <style scoped>
 .indicator {
-  --circular-indicator-default-bg-color: #e1e1e1;
-  --circular-indicator-default-color: #63e060;
+  ---circular-indicator-bar-color:
+    var(--circular-indicator-bar-color, #e1e1e1);
+  ---circular-indicator-bar-active-color:
+    var(--circular-indicator-bar-active-color, #2ecc71);
 
   pointer-events: none;
 }
 
 .background {
   fill: none;
-  stroke: var(--circular-indicator-bg-color,
-    var(--circular-indicator-default-bg-color));
+  stroke: var(---circular-indicator-bar-color);
   stroke-width: 2;
   stroke-dasharray: 51 51;
   stroke-dashoffset: -90;
@@ -107,8 +108,7 @@
 
 .progress {
   fill: none;
-  stroke: var(--circular-indicator-color,
-    var(--circular-indicator-default-color));
+  stroke: var(---circular-indicator-bar-active-color);
   stroke-width: 2;
   stroke-dasharray: 51 51;
   stroke-dashoffset: v-bind('value');
