@@ -66,7 +66,7 @@
 <style scoped>
 .switch {
   ---switch-color: var(--switch-color, #e8e8e8);
-  ---switch-active-color: var(--switch-active-color, #63e060);
+  ---switch-active-color: var(--switch-active-color, #2ecc71);
   ---switch-slider-color: var(--switch-slider-color, #fff);
   ---switch-slider-active-color: var(--switch-slider-active-color,
     var(---switch-slider-color));
