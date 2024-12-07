@@ -159,7 +159,7 @@
 }
 
 .dropdown-button:focus {
-  box-shadow: 0 0 1px 1px var(---dropdown-focus-outline-color);
+  box-shadow: 0 0 0.06em 0.06em var(---dropdown-focus-outline-color);
 }
 
 .dropdown-text {
@@ -185,7 +185,7 @@
   position: absolute;
   z-index: 1;
   top: calc(100% + 0.5em);
-  width: calc(v-bind('width') * 1px);
+  width: calc(v-bind('width') * 0.06em);
   max-height: var(---dropdown-max-height);
   padding: 0.3em;
   border-radius: 0.3em;
