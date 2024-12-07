@@ -71,8 +71,10 @@
 
 <style scoped>
 .checkbox-container {
-  --checkbox-default-active-color: #63e060;
-  --checkbox-default-inactive-color: #e1e1e1;
+  ---checkbox-color: var(--checkbox-color, #e8e8e8);
+  ---checkbox-active-color: var(--checkbox-active-color, #2ecc71);
+  ---checkbox-focus-color: var(--checkbox-focus-color,
+    var(---checkbox-active-color));
 
   position: relative;
   cursor: pointer;
@@ -89,18 +91,16 @@
 
 .checkmark {
   position: relative;
-  width: calc(20px * v-bind('ratio'));
+  width: calc(1.25em * v-bind('ratio'));
   aspect-ratio: 1 / 1;
-  background-color: var(--checkbox-inactive-color,
-    var(--checkbox-default-inactive-color));
-  border-radius: calc(4px * v-bind('ratio'));
-  transition: 0.1s;
-  font-size: calc(20px * v-bind('ratio'));
+  background-color: var(---checkbox-color);
+  border-radius: calc(0.25em * v-bind('ratio'));
+  transition: all 0.1s;
+  font-size: calc(1.25em * v-bind('ratio'));
 }
 
 .checkmark.checked {
-  background-color: var(--checkbox-active-color,
-    var(--checkbox-default-active-color));
+  background-color: var(---checkbox-active-color);
 }
 
 .checkmark.frozen {
@@ -108,9 +108,14 @@
   cursor: not-allowed;
 }
 
-.checkbox-container:focus-within .checkmark {
-  box-shadow: 0 0 1px calc(1px * v-bind('ratio'))
-    var(--checkbox-active-color, var(--checkbox-default-active-color));
+.checkbox-container:focus-within .checkmark,
+.checkmark:hover {
+  box-shadow: 0 0 0.062em calc(0.06em * v-bind('ratio'))
+    var(---checkbox-focus-color);
+}
+
+.checkmark.frozen {
+  box-shadow: none;
 }
 
 .checkbox-container:focus-within .checkmark.frozen {
