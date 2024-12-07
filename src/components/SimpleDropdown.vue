@@ -115,6 +115,11 @@
   onMounted(() => {
     width.value = dropdown.value.offsetWidth;
     resizeObserver.observe(dropdown.value);
+
+    document.addEventListener('keydown', (ev) => {
+      if (active.value && ev.key === 'Escape')
+        toggle();
+    });
   });
 
   onUpdated(() => {
