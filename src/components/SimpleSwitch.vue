@@ -86,7 +86,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  transition: 0.4s;
+  transition: all 0.4s, box-shadow 0.1s;
   background-color: var(---switch-color);
   border-radius: calc(1.5em * v-bind('ratio'));
 }
