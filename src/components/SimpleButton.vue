@@ -87,8 +87,7 @@
   ---button-bg-color: var(--button-bg-color, #e8e8e8);
   ---button-padding: var(--button-padding, 0.5em);
   ---button-hover-bg-color: var(--button-hover-bg-color, #c7f1d9);
-  ---button-focus-color: var(--button-focus-color,
-    var(---button-active-bg-color));
+  ---button-focus-color: var(--button-focus-color, #2ecc71);
 
   ---button-shadow-color: var(---button-active-bg-color);
 
