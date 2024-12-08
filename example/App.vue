@@ -167,11 +167,17 @@
       </SimpleInput>
       <p>Input IP: {{ inputIP }}</p>
     </div>
+    <div class="card">
+      <SimpleDatalist v-model="datalistInput"
+                      :options="['hell', 'hehe', 'hello']" />
+      <p>User input: {{ datalistInput }}</p>
+    </div>
   </div>
 </template>
 
 <script setup>
   import { ref, h } from 'vue';
+import SimpleDatalist from '../src/components/SimpleDatalist.vue';
 
   const label = 'CPU';
   const value = ref('100');
@@ -261,6 +267,8 @@
   const ipFormat = /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$/;
 
   const inputIP = ref('192.168.1.1');
+
+  const datalistInput = ref('');
 </script>
 
 <style scoped>
