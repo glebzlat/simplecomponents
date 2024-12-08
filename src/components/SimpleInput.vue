@@ -105,7 +105,6 @@
   const correctFormat = computed(() => {
     if (!props.format)
       return true;
-    console.log(`correctFormat`)
     return formatRe.test(inputText.value);
   });
 
