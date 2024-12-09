@@ -29,7 +29,7 @@
         <button
           class="item-button"
           @click="choose(idx)"
-          :class="{ active: modelValue === idx }"
+          :class="{ active: modelValue === val }"
           tabindex="-1"
           ref="buttons"
         >
@@ -60,11 +60,10 @@
    */
   defineProps({
     modelValue: {
-      type: Number,
       required: true
     },
     options: {
-      type: Array,
+      type: [Map, Object],
       required: true
     }
   });
@@ -97,8 +96,8 @@
     active.value = false;
   }
 
-  function choose(idx) {
-    emit('update:modelValue', idx);
+  function choose(val) {
+    emit('update:modelValue', val);
     toggle();
   }
 
