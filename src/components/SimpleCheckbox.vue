@@ -77,6 +77,8 @@
   ---checkbox-focus-color: var(--checkbox-focus-color,
     var(---checkbox-active-color));
 
+  display: inline-block;
+  width: fit-content;
   position: relative;
   cursor: pointer;
 }
