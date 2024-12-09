@@ -208,7 +208,7 @@
   z-index: 1;
   top: calc(100% + 0.5em);
   left: 0;
-  width: calc(v-bind('dropdownWidth') * 0.0625em + 1em);
+  width: calc(v-bind('dropdownWidth') * 1px + 1em);
   max-height: var(---datalist-dropdown-max-height);
   padding: 0.3em;
   border-radius: 0.3em;
