@@ -29,7 +29,7 @@
   const props = defineProps({
     size: {
       type: [String, Number],
-      default: 1
+      default: 'medium'
     },
     modelValue: {
       required: true,
