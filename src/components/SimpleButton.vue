@@ -101,6 +101,7 @@
 
   color: var(---button-color);
   background-color: var(---button-bg-color);
+  outline: 0.0625em solid transparent;
 
   transition: all 0.2s;
 }
@@ -125,20 +126,26 @@
   width: 100%;
   height: 100%;
   border-radius: calc(v-bind('borderRadius') * 1em);
-  box-shadow: 0 0 0.5em 0.5em var(---button-shadow-color);
+  box-shadow: 0 0 0.05em 0.4em var(---button-shadow-color);
 
   opacity: 0;
-  transition: all 0.5s;
-}
-
-.button:active:after {
-  box-shadow: 0 0 0 0 var(--button-shadow-color);
-  opacity: 1;
-  transition: 0s;
+  transition: all 0.5s, outline 0.1s;
 }
 
 .button:focus {
-  box-shadow: 0 0 0.0625em 0.0625em var(---button-focus-color);
+  outline: 0.0625em solid var(---button-focus-color);
+}
+
+.button:active,
+.button.active {
+  background-color: var(---button-active-color) !important;
+}
+
+.button:active:after,
+.button.active:after {
+  box-shadow: 0 0 0 0 var(--button-shadow-color);
+  opacity: 1;
+  transition: 0s;
 }
 
 .button-icon {
@@ -159,7 +166,7 @@
   padding: 0.1em;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(---button-color);
+  background-color: var(---button-color);
   --_m:
     conic-gradient(#0000 10%,#000),
     linear-gradient(#000 0 0) content-box;

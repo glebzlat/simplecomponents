@@ -155,7 +155,8 @@
   padding: 0.7em;
   background-color: var(---dropdown-bg-color);
   border-radius: 0.3em;
-  transition: all 0.2s ease-in-out;
+  outline: 0.0625em solid transparent;
+  transition: all 0.2s ease-in-out, outline 0.1s;
 }
 
 .dropdown-button:hover {
@@ -163,7 +164,7 @@
 }
 
 .dropdown-button:focus {
-  box-shadow: 0 0 0.06em 0.06em var(---dropdown-focus-outline-color);
+  outline: 0.0625em solid var(---dropdown-focus-outline-color);
 }
 
 .dropdown-text {

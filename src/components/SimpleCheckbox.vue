@@ -100,6 +100,7 @@
   border-radius: calc(0.25em * v-bind('ratio'));
   transition: all 0.1s;
   font-size: calc(1.25em * v-bind('ratio'));
+  outline: 0.0625em solid transparent;
 }
 
 .checkbox.checked {
@@ -113,16 +114,7 @@
 
 .checkbox-container:focus-within .checkbox,
 .checkbox:hover {
-  box-shadow: 0 0 0.062em calc(0.06em * v-bind('ratio'))
-    var(---checkbox-focus-color);
-}
-
-.checkbox.frozen {
-  box-shadow: none;
-}
-
-.checkbox-container:focus-within .checkbox.frozen {
-  box-shadow: none;
+  outline: 0.0625em solid var(---checkbox-focus-color);
 }
 
 .checkmark {

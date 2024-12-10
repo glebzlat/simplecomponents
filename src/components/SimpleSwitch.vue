@@ -86,9 +86,10 @@
   right: 0;
   bottom: 0;
   left: 0;
-  transition: all 0.4s, box-shadow 0.1s;
+  transition: all 0.4s, outline 0.1s;
   background-color: var(---switch-color);
   border-radius: calc(1.5em * v-bind('ratio'));
+  outline: 0.0625em solid transparent;
 }
 
 .slider.frozen {
@@ -112,19 +113,9 @@
   border-radius: 50%;
 }
 
-.switch:hover .slider {
-  box-shadow: 0 0 0.062em calc(0.06em * v-bind('ratio'))
-    var(---switch-hover-color);
-}
-
+.switch:hover .slider,
 .switch:focus .slider {
-  box-shadow: 0 0 0.062em calc(0.06em * v-bind('ratio'))
-    var(---switch-focus-color);
-}
-
-.switch:hover .slider.frozen,
-.switch:focus .slider.frozen {
-  box-shadow: none;
+  outline: 0.0625em solid var(---switch-hover-color);
 }
 
 .checked::before {
