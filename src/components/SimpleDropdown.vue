@@ -29,7 +29,7 @@
         <button
           class="item-button"
           @click="choose(idx)"
-          :class="{ active: modelValue === val }"
+          :class="{ active: modelValue === idx }"
           tabindex="-1"
           ref="buttons"
         >
