@@ -1,8 +1,9 @@
 <template>
   <button
     class="button"
-    :class="{ loading: loading }"
+    :class="{ loading: loading, active: active }"
     :disabled="frozen"
+    ref="button"
   >
     <div
       v-if="slots['icon']"
@@ -38,7 +39,7 @@
    *   - `--button-hover-bg-color`
    *   - `--button-focus-color`
    */
-  import { computed, useSlots } from 'vue';
+  import { computed, onMounted, ref, useSlots } from 'vue';
 
   const props = defineProps({
     loading: {
@@ -79,6 +80,18 @@
     return 'auto';
   });
 
+  const active = ref(false);
+  const button = ref(null);
+
+  onMounted(() => {
+    button.value.addEventListener('keydown', (event) => {
+      if (button.value === document.activeElement && event.key === 'Enter') {
+        active.value = true;
+        setTimeout(() => active.value = false, 100);
+      }
+    });
+  });
+
 </script>
 
 <style scoped>
@@ -88,8 +101,9 @@
   ---button-padding: var(--button-padding, 0.5em);
   ---button-hover-bg-color: var(--button-hover-bg-color, #c7f1d9);
   ---button-focus-color: var(--button-focus-color, #2ecc71);
+  ---button-active-color: var(--button-active-color, #2ecc71);
 
-  ---button-shadow-color: var(---button-active-bg-color);
+  ---button-shadow-color: var(---button-focus-color);
 
   position: relative;
   display: flex;
