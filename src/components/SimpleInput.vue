@@ -140,6 +140,7 @@
     padding: 0 0.5em;
     border: 0.06em solid var(---input-border-color);
     border-radius: calc(1em * v-bind("borderRadius"));
+    background-color: var(---input-bg-color);
     transition: border 0.2s ease-in-out;
   }
 
