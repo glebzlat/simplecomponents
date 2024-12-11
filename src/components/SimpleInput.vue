@@ -12,11 +12,13 @@
     </div>
     <div class="show-wrapper" v-if="props.hidden">
       <button class="show-button" @click="toggleHide">
-        <div class="show-icon-on" v-if="!hideInput">
-          <slot name="showIconOn"><EyeOn /></slot>
-        </div>
-        <div class="show-icon-off" v-if="hideInput">
-          <slot name="showIconOff"><EyeOff /></slot>
+        <div class="show-button-foreground">
+          <div class="show-icon-on" v-if="!hideInput">
+            <slot name="showIconOn"><EyeOn /></slot>
+          </div>
+          <div class="show-icon-off" v-if="hideInput">
+            <slot name="showIconOff"><EyeOff /></slot>
+          </div>
         </div>
         <div class="show-button-background"></div>
       </button>
@@ -199,6 +201,10 @@
     height: 1em;
     border-radius: 0.3em;
     overflow: hidden;
+  }
+
+  .show-button-foreground {
+    z-index: 0;
   }
 
   .show-button-background {
