@@ -1,17 +1,28 @@
 {
   "name": "simplecomponents",
   "version": "0.0.0",
-  "main": "src/index.js",
   "type": "module",
+  "files": ["dist"],
+  "main": "./dist/simplecomponents.umd.cjs",
+  "module": "./dist/simplecomponents.js",
+  "exports": {
+    ".": {
+      "import": "./dist/simplecomponents.js",
+      "require": "./dist/simplecomponents.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:demo": "vite build --config ./demo/vite.config.js",
     "preview": "vite preview",
     "lint": "eslint . --fix",
     "test": "vitest"
   },
   "dependencies": {
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "simplecomponents": "file:../simplecomponents"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.3",
