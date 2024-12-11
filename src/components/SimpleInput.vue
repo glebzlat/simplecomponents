@@ -156,7 +156,7 @@
     margin: 0;
     border: none;
     outline: none;
-    flex-basis: 100%;
+    width: 100%;
   }
 
   .input-field::placeholder {
