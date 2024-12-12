@@ -3,8 +3,7 @@ import App from './App.vue';
 
 import './assets/main.css';
 
-import SimpleComponents from 'simplecomponents';
-import 'simplecomponents/style.css'
+import SimpleComponents from '#dev';
 
 const app = createApp(App);
 app.use(SimpleComponents);
