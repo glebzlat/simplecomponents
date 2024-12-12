@@ -20,9 +20,6 @@ export default defineConfig({
       }
     }
   },
-  server: {
-    open: './example/index.html'
-  },
   plugins: [
     vue(),
   ],
