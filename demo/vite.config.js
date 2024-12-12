@@ -14,5 +14,8 @@ export default defineConfig({
     emptyOutDir: true,
     assetsDir: 'assets'
   },
+  server: {
+    open: './index.html'
+  },
   plugins: [vue()]
 });
