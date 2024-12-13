@@ -5,6 +5,10 @@
   "files": ["dist"],
   "main": "./dist/simplecomponents.umd.cjs",
   "module": "./dist/simplecomponents.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glebzlat/simplecomponents"
+  },
   "exports": {
     ".": {
       "import": "./dist/simplecomponents.js",
@@ -19,6 +23,7 @@
     }
   },
   "scripts": {
+    "prepare": "npm run build",
     "dev": "vite --config ./demo/vite.config.js",
     "build": "vite build",
     "build:demo": "vite build --config ./demo/vite.config.js",
@@ -26,8 +31,14 @@
     "lint": "eslint . --fix",
     "test": "vitest"
   },
+  "files": {
+    "src",
+    "vite.config.js"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.13"
+  },
   "dependencies": {
-    "vue": "^3.5.13",
     "simplecomponents": "file:../simplecomponents"
   },
   "devDependencies": {
