@@ -199,7 +199,8 @@
   max-height: var(---dropdown-max-height);
   padding: 0.3em;
   border-radius: 0.3em;
-  background-color: var(---dropdown-bg-color);
+  color: var(---dropdown-list-color);
+  background-color: var(---dropdown-list-bg-color);
   list-style: none;
   overflow-y: auto;
   pointer-events: none;
