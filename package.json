@@ -1,13 +1,12 @@
 {
-  "name": "simplecomponents",
-  "version": "0.0.0",
+  "name": "@glebzlat/simplecomponents",
+  "version": "0.0.1",
   "type": "module",
-  "files": ["dist"],
   "main": "./dist/simplecomponents.umd.cjs",
   "module": "./dist/simplecomponents.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/glebzlat/simplecomponents"
+    "url": "git+https://github.com/glebzlat/simplecomponents.git"
   },
   "exports": {
     ".": {
@@ -23,7 +22,6 @@
     }
   },
   "scripts": {
-    "prepare": "npm install && npm run build",
     "dev": "vite --config ./demo/vite.config.js",
     "build": "vite build",
     "build:demo": "vite build --config ./demo/vite.config.js",
@@ -33,6 +31,7 @@
   },
   "files": [
     "src",
+    "dist",
     "vite.config.js",
     "package-lock.json"
   ],
