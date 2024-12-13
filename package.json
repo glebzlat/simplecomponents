@@ -22,6 +22,7 @@
     }
   },
   "scripts": {
+    "publish": "npm run build && npm publish --access public",
     "dev": "vite --config ./demo/vite.config.js",
     "build": "vite build",
     "build:demo": "vite build --config ./demo/vite.config.js",
