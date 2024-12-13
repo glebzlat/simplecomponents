@@ -65,7 +65,7 @@
       required: true
     },
     options: {
-      type: [Map, Object],
+      type: Object,
       required: true
     }
   });
