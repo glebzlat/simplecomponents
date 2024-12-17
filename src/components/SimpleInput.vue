@@ -5,7 +5,8 @@
       <div class="delimiter prefix-delimiter"></div>
     </div>
     <input :type="inputType" :value="inputText" @input="handleInput"
-           class="input-field" :placeholder="props.placeholder">
+           class="input-field" :placeholder="props.placeholder"
+           :disabled="props.disabled">
     <div class="suffix-wrapper" v-if="slots['suffix']">
       <slot name="suffix" />
       <div class="delimiter suffix-delimiter"></div>
@@ -53,6 +54,10 @@
       default: undefined
     },
     hidden: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     }
