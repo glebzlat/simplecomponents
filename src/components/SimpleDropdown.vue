@@ -136,7 +136,7 @@
   ---dropdown-bg-color: var(--dropdown-bg-color, #ededed);
   ---dropdown-list-color: var(--dropdown-list-color, var(---dropdown-color));
   ---dropdown-list-bg-color: var(--dropdown-list-bg-color,
-    var(--dropdown-bg-color));
+    var(---dropdown-bg-color));
   ---dropdown-hover-bg-color: var(--dropdown-hover-bg-color, #2ecc7144);
   ---dropdown-item-hover-bg-color: var(--dropdown-item-hover-bg-color,
     var(---dropdown-hover-bg-color));
