@@ -16,7 +16,6 @@
     "./style.css": "./dist/style.css"
   },
   "scripts": {
-    "publish": "npm run build && npm publish --access public",
     "dev": "vite --config ./vite.config.demo.js",
     "build": "vite build",
     "build:demo": "vite build --config ./vite.config.demo.js",
