@@ -110,7 +110,7 @@
    *   - `--menu-nested-active-bg-color`
    *   - `--menu-font-size`
    */
-  import { ref, computed } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
 
   const props = defineProps({
     options: {
@@ -197,6 +197,24 @@
       emit('update:value', key);
   }
 
+  // Find an index of a top-level option corresponding to an active sub-option.
+  // This is needed to automatically open the list of options on menu remount.
+  const subItemTopIdx = computed(() => {
+    const length = props.options.length;
+    for (let i = 0; i < length; ++i) {
+      const topOpt = props.options[i];
+      if (!topOpt.children)
+        continue
+
+      if (props.active === topOpt.key)
+        return undefined;
+
+      for (let subOpt of topOpt.children)
+        if (props.active === subOpt.key)
+          return i;
+    }
+  });
+
   const hasIcon = computed(() => {
     for (let i of props.options) {
       if (i.icon) {
@@ -211,6 +229,12 @@
       }
     }
     return false;
+  });
+
+  onMounted(() => {
+    const topIdx = subItemTopIdx.value;
+    if (topIdx !== undefined)
+      activateTop(topIdx);
   });
 </script>
 
