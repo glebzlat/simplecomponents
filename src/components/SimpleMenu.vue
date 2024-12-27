@@ -130,7 +130,11 @@
   const nestedLists = ref([]);
 
   function getList(idx) {
-    return nestedLists.value[idx];
+    const className = `menu-list-${idx}`;
+    for (let el of nestedLists.value)
+      if (el.classList.contains(className))
+        return el;
+    return null;
   }
 
   function setInnerButtonsTabIndex(lst, idx) {
@@ -196,7 +200,6 @@
   // Find an index of a top-level option corresponding to an active sub-option.
   // This is needed to automatically open the list of options on menu remount.
   const subItemTopIdx = computed(() => {
-    let idx = 0;
     for (let i = 0; i < props.options.length; ++i) {
       const opt = props.options[i];
       if (!opt.children)
@@ -207,9 +210,7 @@
 
       for (const child of opt.children)
         if (props.active === child.key)
-          return idx;
-
-      ++idx;
+          return i;
     }
   });
 
