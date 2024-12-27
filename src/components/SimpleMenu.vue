@@ -110,7 +110,7 @@
    *   - `--menu-nested-active-bg-color`
    *   - `--menu-font-size`
    */
-  import { ref, computed, onMounted, watch } from 'vue';
+  import { ref, computed, onMounted, watch, nextTick } from 'vue';
 
   const props = defineProps({
     options: {
@@ -130,11 +130,7 @@
   const nestedLists = ref([]);
 
   function getList(idx) {
-    const className = `menu-list-${idx}`;
-    for (let el of nestedLists.value)
-      if (el.classList.contains(className))
-        return el;
-    return null;
+    return nestedLists.value[idx];
   }
 
   function setInnerButtonsTabIndex(lst, idx) {
@@ -237,19 +233,33 @@
       activateTop(topIdx);
   });
 
-  // Open the nested list if the key was assigned before the options.
-  // Close opened list if options changed.
+  function areDifferentItems(a, b) {
+    if (!a ^ !b)
+      return true;
+    return a.key !== b.key || a.label !== b.label ||
+      a?.children.length !== b?.children.length;
+  }
+
   watch(() => props.options, (newValue, oldValue) => {
+    // Open the corresponding nested key if the key was known before the
+    // options. Useful in asyncronous environment, when the key is already
+    // assigned, but the menu options are still awaited from the server.
     if (openedTopIdx.value === undefined) {
-      const topIdx = subItemTopIdx.value;
-      if (topIdx !== undefined)
-        activateTop(topIdx);
+      nextTick(() => {
+        const topIdx = subItemTopIdx.value;
+        if (topIdx !== undefined)
+          activateTop(topIdx);
+      });
 
       return;
     }
 
-    if (newValue[openedTopIdx.value]?.key !==
-        oldValue[openedTopIdx.value]?.key) {
+    // Close the nested list if the corresponding option (or previous option)
+    // was removed. In this case option indexes are shifted back, and
+    // openedTopIdx may match another option that previously was ahead.
+    if (areDifferentItems(
+          newValue[openedTopIdx.value], oldValue[openedTopIdx.value])) {
+      collapseList(getList(openedTopIdx.value));
       openedTopIdx.value = undefined;
       return;
     }
