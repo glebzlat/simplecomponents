@@ -110,7 +110,7 @@
    *   - `--menu-nested-active-bg-color`
    *   - `--menu-font-size`
    */
-  import { ref, computed, onMounted } from 'vue';
+  import { ref, computed, onMounted, watch } from 'vue';
 
   const props = defineProps({
     options: {
@@ -235,6 +235,24 @@
     const topIdx = subItemTopIdx.value;
     if (topIdx !== undefined)
       activateTop(topIdx);
+  });
+
+  // Open the nested list if the key was assigned before the options.
+  // Close opened list if options changed.
+  watch(() => props.options, (newValue, oldValue) => {
+    if (openedTopIdx.value === undefined) {
+      const topIdx = subItemTopIdx.value;
+      if (topIdx !== undefined)
+        activateTop(topIdx);
+
+      return;
+    }
+
+    if (newValue[openedTopIdx.value]?.key !==
+        oldValue[openedTopIdx.value]?.key) {
+      openedTopIdx.value = undefined;
+      return;
+    }
   });
 </script>
 
