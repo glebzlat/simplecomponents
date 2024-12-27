@@ -197,19 +197,20 @@
   // This is needed to automatically open the list of options on menu remount.
   const subItemTopIdx = computed(() => {
     let idx = 0;
-    props.options.forEach(opt => {
+    for (let i = 0; i < props.options.length; ++i) {
+      const opt = props.options[i];
       if (!opt.children)
         continue;
 
       if (props.active === opt.key)
         return undefined;
 
-      ++idx;
-
-      for (let child of opt.children)
+      for (const child of opt.children)
         if (props.active === child.key)
           return idx;
-    })
+
+      ++idx;
+    }
   });
 
   const hasIcon = computed(() => {
@@ -248,6 +249,8 @@
     if (openedTopIdx.value === undefined) {
       nextTick(() => {
         const topIdx = subItemTopIdx.value;
+        console.log(props.active)
+        console.log(topIdx);
         if (topIdx !== undefined)
           activateTop(topIdx);
       });
