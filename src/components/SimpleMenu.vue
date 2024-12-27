@@ -196,19 +196,20 @@
   // Find an index of a top-level option corresponding to an active sub-option.
   // This is needed to automatically open the list of options on menu remount.
   const subItemTopIdx = computed(() => {
-    const length = props.options.length;
-    for (let i = 0; i < length; ++i) {
-      const topOpt = props.options[i];
-      if (!topOpt.children)
-        continue
+    let idx = 0;
+    props.options.forEach(opt => {
+      if (!opt.children)
+        continue;
 
-      if (props.active === topOpt.key)
+      if (props.active === opt.key)
         return undefined;
 
-      for (let subOpt of topOpt.children)
-        if (props.active === subOpt.key)
-          return i;
-    }
+      ++idx;
+
+      for (let child of opt.children)
+        if (props.active === child.key)
+          return idx;
+    })
   });
 
   const hasIcon = computed(() => {
