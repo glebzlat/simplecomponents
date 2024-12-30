@@ -111,6 +111,7 @@
    *   - `--menu-font-size`
    */
   import { ref, computed, onMounted, watch, nextTick } from 'vue';
+  import deepEqual from '../utils/deepEqual';
 
   const props = defineProps({
     options: {
@@ -237,10 +238,13 @@
   });
 
   function areDifferentItems(a, b) {
-    if (!a ^ !b)
+    if (!a ^ !b) {
+      // If either a or b is null. Detects the case when the length of old
+      // options was shorter or longer than the length of the new options.
       return true;
-    return a.key !== b.key || a.label !== b.label ||
-      a?.children.length !== b?.children.length;
+    }
+
+    return !deepEqual(a, b, new Set(['label']));
   }
 
   watch(() => props.options, (newValue, oldValue) => {
@@ -250,8 +254,6 @@
     if (openedTopIdx.value === undefined) {
       nextTick(() => {
         const topIdx = subItemTopIdx.value;
-        console.log(props.active)
-        console.log(topIdx);
         if (topIdx !== undefined)
           activateTop(topIdx);
       });
