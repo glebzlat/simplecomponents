@@ -110,7 +110,8 @@
    *   - `--menu-nested-active-bg-color`
    *   - `--menu-font-size`
    */
-  import { ref, computed, onMounted } from 'vue';
+  import { ref, computed, onMounted, watch, nextTick } from 'vue';
+  import deepEqual from '../utils/deepEqual';
 
   const props = defineProps({
     options: {
@@ -200,17 +201,16 @@
   // Find an index of a top-level option corresponding to an active sub-option.
   // This is needed to automatically open the list of options on menu remount.
   const subItemTopIdx = computed(() => {
-    const length = props.options.length;
-    for (let i = 0; i < length; ++i) {
-      const topOpt = props.options[i];
-      if (!topOpt.children)
-        continue
+    for (let i = 0; i < props.options.length; ++i) {
+      const opt = props.options[i];
+      if (!opt.children)
+        continue;
 
-      if (props.active === topOpt.key)
+      if (props.active === opt.key)
         return undefined;
 
-      for (let subOpt of topOpt.children)
-        if (props.active === subOpt.key)
+      for (const child of opt.children)
+        if (props.active === child.key)
           return i;
     }
   });
@@ -235,6 +235,41 @@
     const topIdx = subItemTopIdx.value;
     if (topIdx !== undefined)
       activateTop(topIdx);
+  });
+
+  function areDifferentItems(a, b) {
+    if (!a ^ !b) {
+      // If either a or b is null. Detects the case when the length of old
+      // options was shorter or longer than the length of the new options.
+      return true;
+    }
+
+    return !deepEqual(a, b, new Set(['label']));
+  }
+
+  watch(() => props.options, (newValue, oldValue) => {
+    // Open the corresponding nested key if the key was known before the
+    // options. Useful in asyncronous environment, when the key is already
+    // assigned, but the menu options are still awaited from the server.
+    if (openedTopIdx.value === undefined) {
+      nextTick(() => {
+        const topIdx = subItemTopIdx.value;
+        if (topIdx !== undefined)
+          activateTop(topIdx);
+      });
+
+      return;
+    }
+
+    // Close the nested list if the corresponding option (or previous option)
+    // was removed. In this case option indexes are shifted back, and
+    // openedTopIdx may match another option that previously was ahead.
+    if (areDifferentItems(
+          newValue[openedTopIdx.value], oldValue[openedTopIdx.value])) {
+      collapseList(getList(openedTopIdx.value));
+      openedTopIdx.value = undefined;
+      return;
+    }
   });
 </script>
 
