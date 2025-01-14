@@ -193,11 +193,12 @@ import SimpleDatalist from '../src/components/SimpleDatalist.vue';
   const frozenCheckbox = ref(false);
   const masterCheckbox = ref(false);
 
-  const dropdownOptions = {
-    'item1': 'Item 1',
-    'item2': 'Item 2 with very very very long name',
-    'item3': 'Item 3'
-  };
+  const dropdownOptions = [
+    { label: 'Item 1', value: 'item1' },
+    { label: 'Item 2 with very very very long name', value: 'item2' },
+    { label: 'Item 3', value: 'item3' }
+  ];
+
   const dropdownState = ref('item1');
 
   const button1 = ref(null);

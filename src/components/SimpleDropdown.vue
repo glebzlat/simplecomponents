@@ -12,7 +12,7 @@
       ref="dropdownButton"
     >
       <p class="dropdown-text">
-        {{ options[modelValue] }}
+        {{ activeItem ? activeItem['label'] : emptyPrompt }}
       </p>
       <div class="dropdown-arrow" />
     </button>
@@ -28,13 +28,13 @@
       >
         <button
           class="item-button"
-          @click="choose(idx)"
-          :class="{ active: modelValue === idx }"
+          @click="choose(val['value'])"
+          :class="{ active: modelValue === val['value'] }"
           tabindex="-1"
           ref="buttons"
         >
           <p class="dropdown-text">
-            {{ val }}
+            {{ val['label'] }}
           </p>
         </button>
       </li>
@@ -60,17 +60,21 @@
    *   - `--dropdown-focus-outline-color`
    *   - `--dropdown-max-height`
    */
-  defineProps({
+  const props = defineProps({
     modelValue: {
       required: true
     },
     options: {
-      type: Object,
+      type: Array,
       required: true
+    },
+    emptyPrompt: {
+      type: String,
+      default: ''
     }
   });
 
-  import { ref, onMounted, onUpdated } from 'vue';
+  import { ref, computed, onMounted, onUpdated } from 'vue';
 
   const active = ref(false);
 
@@ -102,6 +106,14 @@
     emit('update:modelValue', val);
     toggle();
   }
+
+  const activeItem = computed(() => {
+    for (const i of props.options) {
+      if (i['value'] === props.modelValue) {
+        return i;
+      }
+    }
+  });
 
   const dropdown = ref(null);
   const content = ref(null);
