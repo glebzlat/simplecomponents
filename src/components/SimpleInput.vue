@@ -65,7 +65,7 @@
 
   const emit = defineEmits(['input', 'update:modelValue']);
 
-  import { computed, ref, useSlots } from 'vue';
+  import { computed, ref, useSlots, watch } from 'vue';
   import EyeOn from '../icons/EyeOn.vue';
   import EyeOff from '../icons/EyeOff.vue';
 
@@ -125,6 +125,11 @@
     return null;
   })
 
+  watch(() => props.modelValue, (newValue) => {
+    if (inputText.value !== newValue) {
+      inputText.value = newValue;
+    }
+  })
 </script>
 
 <style scoped>
