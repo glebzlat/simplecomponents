@@ -65,6 +65,7 @@
   import levenshteinDistance from '../utils/levenshteinDistance';
 
   const inputText = ref('');
+  const currentVal = ref(undefined);
 
   const sortedOptions = computed(() => {
     if (inputText.value === null) {
@@ -117,11 +118,22 @@
     const opt = sortedOptions.value[idx];
     if (opt) {
       inputText.value = opt.label;
+      currentVal.value = opt.value;
       emit('update:modelValue', opt.value);
       return true;
     }
     return false;
   }
+
+  watch(() => props.modelValue, (newVal) => {
+    if (newVal !== currentVal.value) {
+      const opt = props.options.find((opt) => opt.value === newVal);
+      if (opt) {
+        inputText.value = opt.label;
+        currentVal.value = opt.value;
+      }
+    }
+  }, { immediate: true });
 
   const inputField = ref(null);
   const dropdownWidth = ref(0);
