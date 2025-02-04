@@ -168,13 +168,22 @@
       }
     } else if (key === 'Enter') {
       const success = chooseOption(currentOption.value);
+      emit('update:modelValue', null);
       error.value = !success;
       focusout();
     }
   }
 
   function handleClickOutside() {
-    focused.value = false;
+    const opt = sortedOptions.value.find(
+      (opt) => opt.label === inputText.value);
+    if (opt) {
+      emit('update:modelValue', opt.value);
+    } else {
+      emit('update:modelValue', null);
+      error.value = true;
+    }
+    focusout();
   }
 
   const resizeObserver = new ResizeObserver(onResize)
