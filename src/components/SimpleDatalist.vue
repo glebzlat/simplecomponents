@@ -1,31 +1,32 @@
 <template>
-  <label class="datalist-wrapper" :class="{ error: error }">
-    <input type="text" v-model="inputText" @input="handleInput"
+  <div class="datalist-wrapper" :class="{ error: error }"
+      v-click-outside="handleClickOutside">
+    <input type="text" v-model="inputText"
            class="input-field" :placeholder="props.placeholder"
            @focusin="focusin" @click="focusin"
-           @focusout="focusout" ref="inputField">
+           ref="inputField">
     <ul class="datalist-dropdown"
         :class="{ active: showDropdown }">
       <li class="datalist-item"
           v-for="(val, idx) in sortedOptions"
           :key="idx">
         <button class="datalist-option"
-                @click="choose(idx)"
+                @click="chooseOption(idx)"
                 :class="{ focused: idx === currentOption }"
                 tabindex="-1"
                 ref="buttons">
           <p class="datalist-text">
-            {{ val[1] }}
+            {{ val.label }}
           </p>
         </button>
       </li>
     </ul>
-  </label>
+  </div>
 </template>
 
 <script setup>
   /**
-   * Datalist - input with the dropdown 
+   * Datalist - input with the dropdown
    *
    * The following CSS variables alter the appearance of the component:
    *   - `--datalist-color`
@@ -63,7 +64,7 @@
   import { computed, onMounted, ref, watch } from 'vue';
   import levenshteinDistance from '../utils/levenshteinDistance';
 
-  const inputText = ref(props.modelValue);
+  const inputText = ref('');
 
   const sortedOptions = computed(() => {
     if (inputText.value === null) {
@@ -74,17 +75,31 @@
     const options = [];
     for (let i = 0; i < length; ++i) {
       const opt = props.options[i];
-      const dist = levenshteinDistance(inputText.value, opt);
-      if (dist < opt.length)
-        options.push([dist, opt]);
+      const dist = levenshteinDistance(inputText.value, opt.label);
+      if (dist < opt.label.length) {
+        options.push({ ...opt, dist });
+      }
     }
-    options.sort((a, b) => a[0] - b[0]);
+
+    options.sort((a, b) => a.dist - b.dist);
     return options;
+  });
+
+  const activeOption = computed(() => {
+    if (props.modelValue !== undefined) {
+      for (const opt of props.options) {
+        if (opt.value === props.modelValue) {
+          return opt;
+        }
+      }
+    }
+    return null;
   });
 
   const focused = ref(false);
   const showDropdown = computed(() => {
     return inputText.value?.length !== 0 && focused.value &&
+      activeOption.value?.label !== inputText.value &&
       sortedOptions.value.length > 0;
   });
   const error = ref(false);
@@ -96,17 +111,16 @@
 
   function focusout() {
     focused.value = false;
+  }
 
-    if (!inputText.value?.length) {
-      return;
+  function chooseOption(idx) {
+    const opt = sortedOptions.value[idx];
+    if (opt) {
+      inputText.value = opt.label;
+      emit('update:modelValue', opt.value);
+      return true;
     }
-
-    if (props.options.includes(inputText.value) || props.allowOther) {
-      emit('update:modelValue', inputText.value);
-    } else {
-      emit('update:modelValue', null);
-      error.value = true;
-    }
+    return false;
   }
 
   const inputField = ref(null);
@@ -141,13 +155,14 @@
         currentOption.value--;
       }
     } else if (key === 'Enter') {
-      if (currentOption.value !== undefined) {
-        inputText.value = sortedOptions.value[currentOption.value][1];
-      }
+      const success = chooseOption(currentOption.value);
+      error.value = !success;
       focusout();
     }
+  }
 
-    console.log(currentOption.value)
+  function handleClickOutside() {
+    focused.value = false;
   }
 
   const resizeObserver = new ResizeObserver(onResize)
