@@ -1,10 +1,11 @@
 <template>
   <div class="datalist-wrapper" :class="{ error: error }"
-      v-click-outside="handleClickOutside">
+      v-click-outside="handleClickOutside"
+      ref="datalistWrapper"
+      @resize="onResize">
     <input type="text" v-model="inputText"
            class="input-field" :placeholder="props.placeholder"
-           @focusin="focusin" @click="focusin"
-           ref="inputField">
+           @focusin="focusin" @click="focusin">
     <ul class="datalist-dropdown"
         :class="{ active: showDropdown }">
       <li class="datalist-item"
@@ -135,13 +136,6 @@
     }
   }, { immediate: true });
 
-  const inputField = ref(null);
-  const dropdownWidth = ref(0);
-
-  function onResize() {
-    dropdownWidth.value = inputField.value?.offsetWidth;
-  }
-
   const buttons = ref([]);
   const currentOption = ref(undefined);
   watch(showDropdown, () => currentOption.value = undefined);
@@ -186,10 +180,18 @@
     focusout();
   }
 
+  const datalistWrapper = ref(null);
+  const dropdownWidth = ref(0);
+
+  function onResize() {
+    dropdownWidth.value = datalistWrapper.value?.offsetWidth;
+  }
+
   const resizeObserver = new ResizeObserver(onResize)
 
   onMounted(() => {
-    resizeObserver.observe(inputField.value);
+    onResize();
+    resizeObserver.observe(datalistWrapper.value);
     document.addEventListener('keydown', keydownListener);
   })
 </script>
@@ -244,7 +246,7 @@
   z-index: 1;
   top: calc(100% + 0.5em);
   left: 0;
-  width: calc(v-bind('dropdownWidth') * 1px + 1em);
+  width: calc(v-bind('dropdownWidth') * 1px);
   max-height: var(---datalist-dropdown-max-height);
   padding: 0.3em;
   border-radius: 0.3em;
