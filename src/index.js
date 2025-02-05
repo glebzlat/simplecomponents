@@ -7,6 +7,7 @@ import SimpleButton from './components/SimpleButton.vue';
 import SimpleMenu from './components/SimpleMenu.vue';
 import SimpleInput from './components/SimpleInput.vue';
 import SimpleDatalist from './components/SimpleDatalist.vue';
+import SimpleInputList from './components/SimpleInputList.vue';
 
 import ClickOutside from './directives/ClickOutside';
 
@@ -33,5 +34,6 @@ export default function install(app) {
     .component('SimpleMenu', SimpleMenu)
     .component('SimpleInput', SimpleInput)
     .component('SimpleDatalist', SimpleDatalist)
+    .component('SimpleInputList', SimpleInputList)
     .directive('click-outside', ClickOutside);
 }
