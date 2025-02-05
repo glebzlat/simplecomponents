@@ -7,7 +7,8 @@
            class="input-field" :placeholder="props.placeholder"
            @focusin="focusin" @click="focusin">
     <ul class="datalist-dropdown"
-        :class="{ active: showDropdown }">
+        :class="{ active: showDropdown }"
+        ref="dropdownElement">
       <li class="datalist-item"
           v-for="(val, idx) in sortedOptions"
           :key="idx">
@@ -62,7 +63,7 @@
 
   const emit = defineEmits(['update:modelValue']);
 
-  import { computed, onMounted, ref, watch } from 'vue';
+  import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
   import levenshteinDistance from '../utils/levenshteinDistance';
 
   const inputText = ref('');
@@ -181,18 +182,37 @@
   }
 
   const datalistWrapper = ref(null);
+  const dropdownElement = ref(null);
   const dropdownWidth = ref(0);
 
   function onResize() {
     dropdownWidth.value = datalistWrapper.value?.offsetWidth;
   }
 
+  function setDropdownMaxHeight() {
+    if (!dropdownElement.value) {
+      return;
+    }
+
+    const { top } = dropdownElement.value.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const maxHeight = viewportHeight - top - 16;
+    dropdownElement.value.style.maxHeight = `${maxHeight}px`;
+  }
+
   const resizeObserver = new ResizeObserver(onResize)
 
   onMounted(() => {
     onResize();
+    setDropdownMaxHeight();
     resizeObserver.observe(datalistWrapper.value);
     document.addEventListener('keydown', keydownListener);
+    window.addEventListener('resize', setDropdownMaxHeight);
+  })
+
+  onUnmounted(() => {
+    document.removeEventListener('keydown', keydownListener);
+    window.removeEventListener('resize', setDropdownMaxHeight);
   })
 </script>
 
@@ -285,6 +305,4 @@
 .datalist-option.focused {
   outline: 0.06em solid var(---datalist-focus-outline-color);
 }
-
-.hello {}
 </style>
