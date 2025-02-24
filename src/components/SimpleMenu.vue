@@ -21,7 +21,7 @@
               v-if="item.icon"
             />
           </div>
-          <p>{{ item.label }}</p>
+          <p v-if="item.label">{{ item.label }}</p>
           <div
             v-if="item.children"
             class="menu-arrow"
@@ -54,7 +54,7 @@
                   v-if="child.icon"
                 />
               </div>
-              <p>{{ child.label }}</p>
+              <p v-if="child.label">{{ child.label }}</p>
               <div class="menu-button-inner-border"></div>
             </button>
           </li>
@@ -75,7 +75,7 @@
    * ```
    * option: {
    *   key?: String,
-   *   label: String,
+   *   label?: String,
    *   icon?: VNode | () => VNode,
    *   children?: Array<option>
    * }
