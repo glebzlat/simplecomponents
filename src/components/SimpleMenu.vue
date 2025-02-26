@@ -270,6 +270,8 @@
       openedTopIdx.value = undefined;
       return;
     }
+
+    lst.style.maxHeight = lst.scrollHeight + 'px';
   });
 </script>
 
