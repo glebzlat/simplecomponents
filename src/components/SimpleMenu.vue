@@ -138,6 +138,28 @@
     return null;
   }
 
+  /**
+   * @argument {HTMLElement} lst
+   * @returns {Number} list height in px
+   */
+  function getListHeight(lst) {
+    const getStyle = window.getComputedStyle;
+    const len = lst.children.length;
+
+    if (len == 0) {
+      console.error('SimpleMenu: nested list length == 0!');
+      return 0;
+    }
+
+    if (lst.children.length == 1) {
+      return parseFloat(getStyle(lst.children[0])['height']);
+    }
+
+    const height = parseFloat(getStyle(lst.children[0])['height']);
+    const marginTop = parseFloat(getStyle(lst.children[1])['marginTop']);
+    return height * len + marginTop * (len - 1);
+  }
+
   function setInnerButtonsTabIndex(lst, idx) {
     const buttons = lst.getElementsByTagName('button');
     for (let i = 0; i < buttons.length; ++i)
@@ -145,14 +167,13 @@
   }
 
   function expandList(lst) {
-    lst.style.maxHeight = lst.scrollHeight + 'px';
+    lst.style.maxHeight = getListHeight(lst).toString() + 'px';
     lst.style.opacity = '1';
     lst.style.marginTop = '0.5em';
     setInnerButtonsTabIndex(lst, 0);
   }
 
   function collapseList(lst) {
-    // lst.style.removeProperty('max-height');
     lst.style.maxHeight = '0';
     lst.style.opacity = '0';
     lst.style.marginTop = '0';
@@ -273,7 +294,7 @@
 
     if (openedTopIdx.value !== undefined) {
       const lst = getList(openedTopIdx.value);
-      lst.style.maxHeight = lst.scrollHeight + 'px';
+      lst.style.maxHeight = getListHeight(lst).toString() + 'px';
     }
   });
 </script>
