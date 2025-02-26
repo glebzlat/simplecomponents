@@ -110,7 +110,7 @@
    *   - `--menu-nested-active-bg-color`
    *   - `--menu-font-size`
    */
-  import { ref, computed, onMounted, watch, nextTick } from 'vue';
+  import { ref, computed, watch, nextTick } from 'vue';
   import deepEqual from '../utils/deepEqual';
 
   const props = defineProps({
@@ -181,7 +181,7 @@
     setInnerButtonsTabIndex(lst, -1);
   }
 
-  function activateTop(idx) {
+  function activateTop(idx, preserve) {
     if (props.options[idx].children) {
       const lst = getList(idx);
       if (!lst) {
@@ -191,7 +191,7 @@
 
       // If the index is different, then we open another sub-list. Otherwise,
       // just close currently opened list by setting openedTopIdx to undefined.
-      if (openedTopIdx.value === idx) {
+      if (openedTopIdx.value === idx && !preserve) {
         collapseList(lst);
         openedTopIdx.value = undefined;
       } else if (openedTopIdx.value === undefined){
@@ -252,12 +252,6 @@
     return false;
   });
 
-  onMounted(() => {
-    const topIdx = subItemTopIdx.value;
-    if (topIdx !== undefined)
-      activateTop(topIdx);
-  });
-
   function areDifferentItems(a, b) {
     if (!a ^ !b) {
       // If either a or b is null. Detects the case when the length of old
@@ -302,6 +296,13 @@
       return;
     }
   });
+
+  watch(() => props.active, () => {
+    const topIdx = subItemTopIdx.value;
+    window.console.log(`===!!!=== SimpleMenu: active: ${props.active}, topIdx: ${topIdx}`);
+    if (topIdx !== undefined)
+      activateTop(topIdx, true);
+  }, { immediate: true });
 </script>
 
 <style scoped>
