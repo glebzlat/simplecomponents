@@ -167,14 +167,14 @@
   }
 
   function expandList(lst) {
-    lst.style.maxHeight = getListHeight(lst).toString() + 'px';
+    lst.style.height = getListHeight(lst).toString() + 'px';
     lst.style.opacity = '1';
     lst.style.marginTop = '0.5em';
     setInnerButtonsTabIndex(lst, 0);
   }
 
   function collapseList(lst) {
-    lst.style.maxHeight = '0';
+    lst.style.height = '0';
     lst.style.opacity = '0';
     lst.style.marginTop = '0';
 
@@ -282,6 +282,16 @@
       return;
     }
 
+    // Recalculate nested list's height to match the case when the amount
+    // of nested options is changed.
+    nextTick(() => {
+      if (openedTopIdx.value !== undefined) {
+        const lst = getList(openedTopIdx.value);
+        const height = getListHeight(lst).toString() + 'px';
+        lst.style.height = height;
+      }
+    })
+
     // Close the nested list if the corresponding option (or previous option)
     // was removed. In this case option indexes are shifted back, and
     // openedTopIdx may match another option that previously was ahead.
@@ -290,11 +300,6 @@
       collapseList(getList(openedTopIdx.value));
       openedTopIdx.value = undefined;
       return;
-    }
-
-    if (openedTopIdx.value !== undefined) {
-      const lst = getList(openedTopIdx.value);
-      lst.style.maxHeight = getListHeight(lst).toString() + 'px';
     }
   });
 </script>
@@ -434,7 +439,7 @@
   margin-top: 0;
   border-radius: 0.3em;
   list-style: none;
-  max-height: 0;
+  height: 0;
   opacity: 0;
   overflow: hidden;
   transition: opacity 0.7s, all 0.3s;
