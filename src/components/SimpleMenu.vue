@@ -271,7 +271,10 @@
       return;
     }
 
-    lst.style.maxHeight = lst.scrollHeight + 'px';
+    if (openedTopIdx.value !== undefined) {
+      const lst = getList(openedTopIdx.value);
+      lst.style.maxHeight = lst.scrollHeight + 'px';
+    }
   });
 </script>
 
