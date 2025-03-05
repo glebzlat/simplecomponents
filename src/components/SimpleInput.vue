@@ -53,10 +53,6 @@
       type: Function,
       default: null
     },
-    error: {
-      type: String,
-      default: undefined
-    },
     hidden: {
       type: Boolean,
       default: false
@@ -67,7 +63,7 @@
     }
   });
 
-  const emit = defineEmits(['input', 'update:modelValue']);
+  const emit = defineEmits(['input', 'error', 'update:modelValue']);
 
   import { computed, ref, useSlots, watch } from 'vue';
   import EyeOn from '../icons/EyeOn.vue';
@@ -106,9 +102,11 @@
     inputText.value = event.target.value;
     typedIn.value = true;
 
-    const data = errorMsg.value ? null : inputText.value;
-    emit('input', data);
-    emit('update:modelValue', data);
+    emit('input', inputText.value);
+    emit('update:modelValue', inputText.value);
+    if (errorMsg.value !== null) {
+      emit('error');
+    }
   }
 
   const formatRe = props.format ? new RegExp(props.format) : null;
@@ -122,8 +120,6 @@
   const errorMsg = computed(() => {
     if (!typedIn.value)
       return null;
-    if (props.error)
-      return props.error;
     if (props.validate) {
       const [ ok, msg ] = props.validate(inputText.value);
       if (!ok) return msg;
