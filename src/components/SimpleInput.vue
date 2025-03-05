@@ -49,6 +49,10 @@
       type: [String, RegExp],
       default: undefined
     },
+    validate: {
+      type: Function,
+      default: null
+    },
     error: {
       type: String,
       default: undefined
@@ -120,6 +124,10 @@
       return null;
     if (props.error)
       return props.error;
+    if (props.validate) {
+      const [ ok, msg ] = props.validate(inputText.value);
+      if (!ok) return msg;
+    }
     if (!correctFormat.value)
       return "Incorrect format";
     return null;
